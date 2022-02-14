@@ -81,6 +81,27 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.7</version>
+				<configuration>
+					<excludes>
+						<!-- skipataan app-tiedosto -->
+						<exclude>**/*NorasCoffeeShopApplication.*</exclude>
+						<!-- <exclude>**/*DevSecurityConfiguration.*</exclude> -->
+					</excludes>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

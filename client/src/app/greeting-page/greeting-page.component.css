@@ -19,6 +19,7 @@ div.server-greeting {
     height: 100%;
     width: auto;
     padding: 1rem;
+    text-align: center;
 }
 
 @media only screen and (min-width: 768px) {
