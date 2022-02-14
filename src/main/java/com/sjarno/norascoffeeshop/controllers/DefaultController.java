@@ -13,10 +13,13 @@ public class DefaultController {
 
     /* Quick testing for server: */
     @GetMapping("/greet")
-    public ResponseEntity<Map<String, String>> serverGreeting() {
+    public Map<String, String> serverGreeting() {
         Map<String, String> greeting = new HashMap<>();
-        greeting.put("greet", "Greeting from server");
-        return new ResponseEntity<>(greeting, HttpStatus.OK);
+        greeting.put(
+            "greet", 
+            "Hi, and welcome! The site is currently under construction, but stay tuned for upcoming site.");
+        return greeting;
+        
     }
     
 }

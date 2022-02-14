@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~reset-css/reset.css';
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
+html {
+    font-size: 62.5%;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+p {
+    font-size: 1.8rem;
+}
+
+body {
+    background-color: rgb(90, 81, 81);
+}
+
+header {
+    font-family: 'Kaushan Script', cursive;
+}
+
+header, footer {
+    color: whitesmoke;
+    background-color: black;
+    text-align: center;
+}

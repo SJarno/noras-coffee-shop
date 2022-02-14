@@ -1,0 +1,33 @@
+section.greeting-page {
+    color: whitesmoke;
+    background-image: url("/assets/images/coffee-shop-main.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 60rem;
+    background-position-x: 40%;
+    background-position-y: 90%;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+}
+
+div.server-greeting {
+    margin-top: 30%;
+    background-color: rgba(0, 0, 0, .5);
+    height: 100%;
+    width: auto;
+    padding: 1rem;
+}
+
+@media only screen and (min-width: 768px) {
+    section.greeting-page {
+        min-height: 93rem;
+        background-position-x: 30%;
+        background-position-y: 50%;
+    }
+    div.server-greeting {
+        margin-top: 10%;
+    }
+}
