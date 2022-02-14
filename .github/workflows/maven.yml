@@ -26,3 +26,6 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Code coverage report
       run: mvn test jacoco:report
+    - name: Data to codecov
+      run: bash <(curl -s https://codecov.io/bash)
+  
