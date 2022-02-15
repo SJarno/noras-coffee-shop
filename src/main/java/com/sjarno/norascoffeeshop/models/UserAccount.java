@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -21,21 +19,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(
-    name = "users", 
-    uniqueConstraints = @UniqueConstraint(columnNames = "username"))
-public class UserAccount extends AbstractPersistable<Long>{
-    
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
+public class UserAccount extends AbstractPersistable<Long> {
+
     @Column(name = "username")
     private String username;
 
     @Column(name = "password")
     private String password;
 
-    /* @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles; */
-    
-    //enum typed roles as string
-    @Enumerated(EnumType.STRING)
-    private List<Role> roles;
+    // enum typed roles as string
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<UserRole> roles;
 }
