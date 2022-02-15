@@ -1,13 +1,26 @@
 package com.sjarno.norascoffeeshop;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@ActiveProfiles("test")
 @SpringBootTest
+@AutoConfigureMockMvc
 class NorasCoffeeShopApplicationTests {
 
+	@Autowired
+	private MockMvc mockMvc;
+
 	@Test
-	void contextLoads() {
+	void contextLoads() throws Exception {
+		this.mockMvc.perform(get("/")).andExpect(status().isOk());
 	}
 
 }
