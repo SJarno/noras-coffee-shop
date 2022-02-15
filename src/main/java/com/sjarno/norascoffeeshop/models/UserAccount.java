@@ -31,4 +31,10 @@ public class UserAccount extends AbstractPersistable<Long> {
     // enum typed roles as string
     @ElementCollection(fetch = FetchType.EAGER)
     private List<UserRole> roles;
+
+    
+    /* public List<UserRole> getRoles() {
+        return this.roles;
+    } */
+
 }
