@@ -10,7 +10,6 @@ import com.sjarno.norascoffeeshop.repositories.UserAccountRepository;
 import com.sjarno.norascoffeeshop.repositories.UserRoleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +27,9 @@ public class UserAccountService {
 
     /* For quick testing */
     public void createUserAdmin() {
+        userRoleRepository.deleteAll();
+        userAccountRepository.deleteAll();
+
         UserRole role = new UserRole();
         role.setRoleType(RoleType.ROLE_ADMIN);
         
