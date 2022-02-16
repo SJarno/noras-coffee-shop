@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 
 import {MatSelectModule} from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { XhrInterceptorService } from './services/xhr-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatSelectModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptorService, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

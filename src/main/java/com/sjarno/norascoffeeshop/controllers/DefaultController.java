@@ -34,7 +34,9 @@ public class DefaultController {
         try {
             userService.createUserAdmin();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println();
+            System.out.println("Virhe juu: "+e.getMessage());
+            System.out.println();
         }
         
     }
