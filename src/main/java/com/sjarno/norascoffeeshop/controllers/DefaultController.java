@@ -31,7 +31,12 @@ public class DefaultController {
     }
     @PostConstruct
     public void init() {
-        userService.createUserAdmin();
+        try {
+            userService.createUserAdmin();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
     }
     
 }
