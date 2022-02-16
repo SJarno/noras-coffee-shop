@@ -14,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.sjarno.norascoffeeshop.services.CustomUserDetailsService;
+
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -22,8 +24,12 @@ public class DefaultControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    /* @Autowired
+    private CustomUserDetailsService userDetailsService; */
+
     @Test
     @WithAnonymousUser
+    @WithMockUser
     void testServerGreeting() throws Exception {
         this.mockMvc.perform(get("/greet")).andExpect(status().isOk());
 
