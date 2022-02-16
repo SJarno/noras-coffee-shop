@@ -10,6 +10,11 @@ import { FooterComponent } from './footer/footer.component';
 import { MainComponent } from './main/main.component';
 import { GreetingPageComponent } from './greeting-page/greeting-page.component';
 
+import { FormsModule } from '@angular/forms';
+
+import {MatSelectModule} from '@angular/material/select';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +27,10 @@ import { GreetingPageComponent } from './greeting-page/greeting-page.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    MatSelectModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

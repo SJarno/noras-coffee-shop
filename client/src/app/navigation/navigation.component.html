@@ -1,8 +1,31 @@
 <header>
-    <h1>{{logoText}}</h1>
+    <h1><fa-icon [icon]="faCoffee"></fa-icon> {{logoText}}</h1>
     <nav>
-        <section class="nav-links">
-            <p>Other links and info here</p>
+        
+        <button (click)="toggleNavBar()" class="mobile-menu-bar">
+            <fa-icon [icon]="faBars"></fa-icon>
+        </button>
+        <section class="nav-links" #testi>
+            <ul>
+                <li>
+                    <p>Cafeteria</p>
+                </li>
+                <li>
+                    <p>Menu</p>
+                </li>
+                <li>
+                    <p>Shop online</p>
+                </li>
+            </ul>
+        </section>
+        <section class="login-section">
+            <form class="login-form">
+                <label for="username">Username: </label>
+                <input type="text" name="username">
+                <label for="password">Password: </label>
+                <input type="password" name="password" id="">
+                <button type="submit">Login</button>
+            </form>
         </section>
     </nav>
 </header>

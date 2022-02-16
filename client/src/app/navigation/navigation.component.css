@@ -2,3 +2,61 @@ header {
     padding: 1rem;
     line-height: 4rem;
 }
+
+.nav-links {
+    display: none;
+    justify-content: space-evenly;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+}
+
+section.nav-links ul {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+
+
+section.nav-links ul>* {
+    flex-basis: 100%;
+}
+
+section.login-section {
+    display: flex;
+    justify-content: center;
+}
+
+form.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+form.login-form >* {
+    flex-basis: 100%;
+} 
+
+
+.mobile-menu-bar {
+    box-sizing: border-box;
+    background-color: black;
+    color: whitesmoke;
+    border: 0.1rem solid whitesmoke;
+}
+
+@media only screen and (min-width: 768px) {
+    .nav-links {
+        display: flex;
+        
+    }
+    section.nav-links ul {
+        flex-direction: row;
+    }
+
+    form.login-form {
+        display: block;
+    }
+    .mobile-menu-bar { 
+        display: none;
+    }
+}

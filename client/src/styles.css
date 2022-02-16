@@ -9,7 +9,7 @@ h1 {
     font-size: 4rem;
 }
 
-p {
+p, label, input, button {
     font-size: 1.8rem;
 }
 
