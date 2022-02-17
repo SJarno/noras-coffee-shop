@@ -1,5 +1,5 @@
 <header>
-    <h1><fa-icon [icon]="faCoffee"></fa-icon> {{logoText}}</h1>
+    <h1 routerLink="greet-page"><fa-icon [icon]="faCoffee"></fa-icon> {{logoText}}</h1>
     <nav>
         
         <button (click)="toggleNavBar()" class="mobile-menu-bar">
@@ -8,13 +8,15 @@
         <section class="nav-links" #testi>
             <ul>
                 <li>
-                    <p>Cafeteria</p>
+                    <a>Cafeteria</a>
                 </li>
                 <li>
-                    <p>Menu</p>
+                    <a>Menu</a>
                 </li>
                 <li>
-                    <p>Shop online</p>
+                    <a routerLink="shop">
+                        Shop online
+                    </a>
                 </li>
 
             </ul>

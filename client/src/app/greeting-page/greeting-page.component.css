@@ -8,18 +8,76 @@ section.greeting-page {
     background-position-y: 90%;
 }
 
-section {
+.container {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.container > * {
+    flex-basis: 100%;
 }
 
 div.server-greeting {
-    margin-top: 30%;
+    margin-top: 5%;
     background-color: rgba(0, 0, 0, .5);
     height: 100%;
     width: auto;
     padding: 1rem;
     text-align: center;
+}
+
+figure.cafeteria {
+    background-image: url("/assets/images/cafeteria.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: 30%;
+    background-position-y: 50%;
+    
+}
+
+figure.menu {
+    background-image: url("/assets/images/menu.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: 42%;
+    background-position-y: 50%;
+}
+
+figure.online {
+    background-image: url("/assets/images/store-sign.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: 30%;
+    background-position-y: 50%;
+}
+
+figure {
+    margin: 2rem;
+    border: 0.25rem solid wheat;
+    border-radius: 1rem;
+    min-height: 25rem;
+    max-width: 35rem;
+}
+
+figure:hover {
+    border: 0.25rem solid rgb(209, 235, 80);
+}
+
+img {
+    width: 100%;
+    border-radius: 1rem 1rem 0rem 0rem;
+    margin-bottom: -0.25rem;
+    
+}
+
+figcaption {
+    text-align: center;
+    font-size: 1.8rem;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 1rem 1rem 0rem 0rem;
+    padding: 0.5rem;
 }
 
 @media only screen and (min-width: 768px) {
@@ -29,6 +87,22 @@ div.server-greeting {
         background-position-y: 50%;
     }
     div.server-greeting {
-        margin-top: 10%;
+        /* margin-top: 10%; */
     }
+    figure.cafeteria {
+        background-position-x: 30%;
+        background-position-y: 50%;
+        
+    }
+    figure.menu {
+        background-position-x: 42%;
+        background-position-y: 50%;
+    }
+    
+    figure.online {
+        background-position-x: 30%;
+        background-position-y: 50%;
+    }
+    
+    
 }

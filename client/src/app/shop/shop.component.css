@@ -1,0 +1,9 @@
+section.shopping-page {
+    color: whitesmoke;
+    background-image: url("/assets/images/coffee-beans.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 60rem;
+    background-position-x: 40%;
+    background-position-y: 90%;
+}

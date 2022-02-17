@@ -2,6 +2,7 @@ package com.sjarno.norascoffeeshop.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 import com.sjarno.norascoffeeshop.models.RoleType;
 import com.sjarno.norascoffeeshop.models.UserAccount;
@@ -27,9 +28,9 @@ public class UserAccountService {
 
     /* For quick testing */
     public void createUserAdmin() {
+        
         userRoleRepository.deleteAll();
         userAccountRepository.deleteAll();
-
         UserRole role = new UserRole();
         role.setRoleType(RoleType.ROLE_ADMIN);
         
