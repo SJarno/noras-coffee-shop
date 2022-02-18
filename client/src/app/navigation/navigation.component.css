@@ -28,6 +28,8 @@ section.login-section {
 }
 
 form.login-form {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     flex-direction: column;
 }

@@ -1,7 +1,9 @@
 <header>
-    <h1 routerLink="greet-page"><fa-icon [icon]="faCoffee"></fa-icon> {{logoText}}</h1>
+    <h1 routerLink="greet-page">
+        <fa-icon [icon]="faCoffee"></fa-icon> {{logoText}}
+    </h1>
     <nav>
-        
+
         <button (click)="toggleNavBar()" class="mobile-menu-bar">
             <fa-icon [icon]="faBars"></fa-icon>
         </button>
@@ -18,10 +20,23 @@
                         Shop online
                     </a>
                 </li>
+                <div>
+                    <button (click)="toggleLoginForm()">Login to service</button>
+                    <section class="login-section" *ngIf="showLoginForm"> 
+                        <form role="form" class="login-form" (submit)="login()" *ngIf="!auth.authenticated">
+                            <label for="username">Username: </label>
+                            <input type="text" name="username" [(ngModel)]="credentials.username">
+                            <label for="password">Password: </label>
+                            <input type="password" name="password" [(ngModel)]="credentials.password">
+                            <button type="submit">Login</button>
+                        </form>
+                        <button *ngIf="auth.authenticated" (click)="auth.logout()">Logout</button>
+                    </section>
+                </div>
 
             </ul>
         </section>
-        <section class="login-section">
+        <!-- <section class="login-section">
             <form role="form" class="login-form" 
                 (submit)="login()" 
                 *ngIf="!auth.authenticated">
@@ -33,6 +48,6 @@
             </form>
             <button *ngIf="auth.authenticated"
                 (click)="auth.logout()">Logout</button>
-        </section>
+        </section> -->
     </nav>
 </header>

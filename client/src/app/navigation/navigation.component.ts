@@ -14,6 +14,7 @@ export class NavigationComponent implements OnInit {
   credentials = { 'username': '', 'password': '' };
   logoText: string;
   showNavBar: boolean;
+  showLoginForm: boolean;
   faCoffee = faCoffee;
   faBars = faBars;
   /* authenticated: boolean = false; */
@@ -24,6 +25,7 @@ export class NavigationComponent implements OnInit {
   constructor(public auth: AuthService, private route: Router) {
     this.logoText = "Noras Coffee Shop";
     this.showNavBar = true;
+    this.showLoginForm = false;
 
   }
 
@@ -41,6 +43,9 @@ export class NavigationComponent implements OnInit {
 
     }
 
+  }
+  toggleLoginForm() {
+    this.showLoginForm = !this.showLoginForm;
   }
   
   login() {
