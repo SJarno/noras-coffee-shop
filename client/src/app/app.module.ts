@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { XhrInterceptorService } from './services/xhr-interceptor.service';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { XhrInterceptorService } from './services/xhr-interceptor.service';
     NavigationComponent,
     FooterComponent,
     MainComponent,
-    GreetingPageComponent
+    GreetingPageComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,

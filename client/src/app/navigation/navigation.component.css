@@ -9,6 +9,14 @@ header {
     flex-direction: column;
     /* flex-wrap: wrap; */
 }
+section.nav-links a {
+    color: whitesmoke;
+}
+
+section.nav-links a:hover {
+    color: rgb(98, 98, 134);
+    
+}
 
 section.nav-links ul {
     display: flex;
@@ -27,11 +35,19 @@ section.login-section {
     justify-content: center;
 }
 
+.loginBtn {
+    color: whitesmoke;
+    background-color: chocolate;
+    border: 0.1rem solid chocolate;
+    border-radius: 0.5rem;
+}
+
 form.login-form {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     flex-direction: column;
+    padding: 1rem;
 }
 
 form.login-form >* {
@@ -55,9 +71,9 @@ form.login-form >* {
         flex-direction: row;
     }
 
-    form.login-form {
+    /* form.login-form {
         display: block;
-    }
+    } */
     .mobile-menu-bar { 
         display: none;
     }

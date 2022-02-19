@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ErrorHandler, Injectable } from '@angular/core';
 import { catchError, finalize, Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
   authenticated: boolean = false;
   roles?: [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private messageService: MessageService) { }
 
   public logout(): void {
     this.http.post(environment.baseUrl+'logout', {})
@@ -19,6 +20,7 @@ export class AuthService {
         this.username = '';
         this.authenticated = false;
         this.roles = [];
+        this.messageService.addSuccessMessage("Logout successfull");
       }))
       .subscribe();
   }
@@ -39,10 +41,12 @@ export class AuthService {
             this.authenticated = true;
             console.log(response['authorities']);
             this.roles = response['authorities'];
+            this.messageService.addSuccessMessage("Login successfull!");
           } else {
             this.username = '';
             this.authenticated = false;
             this.roles = [];
+            
           }
           return callback && callback();
         });
@@ -57,9 +61,20 @@ export class AuthService {
   
   private handleLoginError<T>(operation = 'operation', result?: T) {
     return (error:any): Observable<T> => {
-      console.error("This error goes to message service");
+      console.error("Error");
+      console.error(error);
+      console.error("Result");
+      console.error(result);
       console.error("Status");
       console.error(error.status);
+      if (error.status === 401) {
+        this.messageService.addErrorMessage(`Wrong username or password`);
+        
+      } else {
+        this.messageService.addErrorMessage("Something went wrong");
+      }
+      this.messageService.addErrorMessage(`Error status: ${error.status}`);
+      
       return of(result as T);
     }
   }

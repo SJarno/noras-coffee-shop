@@ -50,9 +50,14 @@ export class NavigationComponent implements OnInit {
   
   login() {
     this.auth.login(this.credentials, () => {
+      
       this.route.navigateByUrl("/");
     });
     return false;
+  }
+  logout() {
+    this.auth.logout();
+    this.credentials = { 'username': '', 'password': '' };
   }
 
 }

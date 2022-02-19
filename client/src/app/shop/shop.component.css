@@ -3,7 +3,7 @@ section.shopping-page {
     background-image: url("/assets/images/coffee-beans.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 60rem;
+    min-height: 80rem;
     background-position-x: 40%;
     background-position-y: 90%;
 }

@@ -9,6 +9,10 @@ h1 {
     font-size: 4rem;
 }
 
+h2 {
+    font-size: 3.5rem;
+}
+
 p, label, input, button, a {
     font-size: 1.8rem;
 }
@@ -27,6 +31,6 @@ header {
 
 header, footer {
     color: whitesmoke;
-    background-color: black;
+    background-color: #22170f;
     text-align: center;
 }

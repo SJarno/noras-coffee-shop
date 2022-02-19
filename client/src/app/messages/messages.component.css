@@ -1,0 +1,26 @@
+.alert {
+    text-align: center;
+    position: relative;
+    top: -70rem;
+    display: flex;
+    justify-content: center;
+    
+}
+
+div.content {
+    padding: 1rem;
+}
+
+.alert-error {
+    color: whitesmoke;
+    background-color: rgba(197, 28, 28, 0.5);
+    
+}
+
+.alert-success {
+    background-color: rgba(25, 180, 46, 0.5);
+}
+
+.alert-info {
+    background-color: rgba(206, 209, 25, 0.5);
+}

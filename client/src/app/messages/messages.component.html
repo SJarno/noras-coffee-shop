@@ -1,0 +1,30 @@
+<section *ngIf="messageService.successMessages.length" class="alert">
+    <div class="alert-success content">
+        <h2>Messages</h2>
+        <button (click)="messageService.clearSuccessMessages()">OK</button>
+        <div *ngFor="let success of messageService.successMessages">
+            <p>{{success}}</p>
+        </div>
+    </div>
+
+</section>
+
+<section *ngIf="messageService.errorMessages.length" class="alert">
+    <div class="alert-error content">
+        <h2>Messages</h2>
+        <button (click)="messageService.clearErrorMessages()">OK</button>
+        <div *ngFor="let error of messageService.errorMessages">
+            <p>{{error}}</p>
+        </div>
+    </div>
+</section>
+
+<section *ngIf="messageService.infoMessages.length" class="alert">
+    <div class="alert-info content">
+        <h2>Messages</h2>
+        <button (click)="messageService.clearInfoMessages()">OK</button>
+        <div *ngFor="let info of messageService.infoMessages">
+            <p>{{info}}</p>
+        </div>
+    </div>
+</section>

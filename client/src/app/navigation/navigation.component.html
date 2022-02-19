@@ -10,10 +10,10 @@
         <section class="nav-links" #testi>
             <ul>
                 <li>
-                    <a>Cafeteria</a>
+                    <a routerLink="/">Cafeteria</a>
                 </li>
                 <li>
-                    <a>Menu</a>
+                    <a routerLink="/">Menu</a>
                 </li>
                 <li>
                     <a routerLink="shop">
@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <div>
-                    <button (click)="toggleLoginForm()">Login to service</button>
+                    <button (click)="toggleLoginForm()" *ngIf="!auth.authenticated" class="loginBtn">Login to service</button>
                     <section class="login-section" *ngIf="showLoginForm"> 
                         <form role="form" class="login-form" (submit)="login()" *ngIf="!auth.authenticated">
                             <label for="username">Username: </label>
@@ -29,9 +29,9 @@
                             <label for="password">Password: </label>
                             <input type="password" name="password" [(ngModel)]="credentials.password">
                             <button type="submit">Login</button>
-                        </form>
-                        <button *ngIf="auth.authenticated" (click)="auth.logout()">Logout</button>
+                        </form> 
                     </section>
+                    <button *ngIf="auth.authenticated" (click)="logout()">Logout</button>
                 </div>
 
             </ul>
