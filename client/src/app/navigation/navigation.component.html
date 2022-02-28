@@ -7,7 +7,7 @@
         <button (click)="toggleNavBar()" class="mobile-menu-bar">
             <fa-icon [icon]="faBars"></fa-icon>
         </button>
-        <section class="nav-links" #testi>
+        <section class="nav-links" #navContent>
             <ul>
                 <li>
                     <a routerLink="/">Cafeteria</a>
@@ -19,6 +19,9 @@
                     <a routerLink="shop">
                         Shop online
                     </a>
+                </li>
+                <li>
+                    <a routerLink="dashboard">Dashboard</a>
                 </li>
                 <div>
                     <button (click)="toggleLoginForm()" *ngIf="!auth.authenticated" class="loginBtn">Login to service</button>

@@ -19,7 +19,7 @@ export class NavigationComponent implements OnInit {
   faBars = faBars;
   /* authenticated: boolean = false; */
 
-  @ViewChild('testi')
+  @ViewChild('navContent')
   navItems?: ElementRef;
 
   constructor(public auth: AuthService, private route: Router) {
@@ -50,14 +50,14 @@ export class NavigationComponent implements OnInit {
   
   login() {
     this.auth.login(this.credentials, () => {
-      
-      this.route.navigateByUrl("/");
+      this.route.navigateByUrl("/dashboard");
     });
     return false;
   }
   logout() {
     this.auth.logout();
     this.credentials = { 'username': '', 'password': '' };
+    this.route.navigateByUrl("/");
   }
 
 }

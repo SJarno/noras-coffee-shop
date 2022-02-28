@@ -43,12 +43,16 @@ public class DevSecurityConfiguration extends WebSecurityConfigurerAdapter {
         String[] publicGetMethods = new String[] {
                 "/greet"
         };
+        String[] putMethods = new String[] {
+            "/update-username/**"
+        };
 
         http.headers().frameOptions().sameOrigin();
 
         http.httpBasic()
                 .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.PUT, putMethods).authenticated()
                 .antMatchers(staticClientResources).permitAll()
                 .antMatchers(HttpMethod.GET, publicGetMethods).permitAll()
                 .anyRequest().authenticated()

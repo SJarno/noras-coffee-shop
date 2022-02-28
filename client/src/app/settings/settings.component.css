@@ -1,0 +1,14 @@
+section {
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    background: rgba(0, 0, 0, 0.5);
+    min-width: 40rem;
+    min-height: 10rem;
+}
+
+table {
+    width: 100%;
+}

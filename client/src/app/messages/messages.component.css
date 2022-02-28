@@ -4,6 +4,7 @@
     top: -70rem;
     display: flex;
     justify-content: center;
+    z-index: 99;
     
 }
 

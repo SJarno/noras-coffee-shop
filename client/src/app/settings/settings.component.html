@@ -1,0 +1,46 @@
+<h3>Account settings</h3>
+<section>
+    <article>
+        <form>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            <h4>User info</h4>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!displayModify">
+                        <td>
+                            <label><p>Username: {{authService.username}}</p></label>
+                        </td>
+                        
+                    </tr>
+                    <tr *ngIf="displayModify">
+                        <td>
+                            <label for="newUsername">New username: </label>
+                        </td>
+                        <td>
+                            <input type="text" name="newUsername" 
+                                [(ngModel)]="newUsername">
+                        </td>
+                    </tr>
+                    
+                </tbody>
+                <tfoot>
+                    <tr *ngIf="displayModify">
+                        <th>
+                            <button type="submit" (click)="updateUsername()">Save</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <button (click)="toggleModify()">Modify</button>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </article>
+</section>

@@ -1,0 +1,12 @@
+section.dashboard {
+    background-image: url("/assets/images/coffee-beans.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 80rem;
+    color: whitesmoke;
+    text-align: center;
+}
+
+.mat-tab-label{
+    border-bottom: 0.1rem solid;
+ } 
