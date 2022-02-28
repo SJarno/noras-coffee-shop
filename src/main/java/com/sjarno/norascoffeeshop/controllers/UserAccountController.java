@@ -1,11 +1,15 @@
 package com.sjarno.norascoffeeshop.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import com.sjarno.norascoffeeshop.models.UserAccount;
 import com.sjarno.norascoffeeshop.repositories.UserAccountRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +26,7 @@ public class UserAccountController {
 
     @Transactional
     @PutMapping("/update-username/{oldUsername}/{newUsername}")
-    public String updateUsername(
+    public Map<String, String> updateUsername(
         @PathVariable String oldUsername,
         @PathVariable String newUsername 
         ) {
@@ -33,7 +37,9 @@ public class UserAccountController {
         System.out.println(newUsername);
         System.out.println();
         //Optional<UserAccount> userAccount = this.userAccountRepository.findByUsername(oldUsername);
-        return "result: Juu";
+        Map<String, String> testmap = new HashMap<>();
+        testmap.put("username", newUsername);
+        return testmap;
         
     }
     

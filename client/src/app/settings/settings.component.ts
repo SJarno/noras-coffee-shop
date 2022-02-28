@@ -10,7 +10,7 @@ import { RequestsService } from '../services/requests.service';
 export class SettingsComponent implements OnInit {
   displayModify: boolean = false;
   newUsername?: string;
-  oldUsername?: any;
+  oldUsername?: string;
 
   constructor(public authService: AuthService, private request: RequestsService) {
     
@@ -27,9 +27,10 @@ export class SettingsComponent implements OnInit {
     console.log(this.newUsername);
     console.log(this.authService.username);
     
-    this.request.updateUsername(this.newUsername, this.oldUsername).subscribe(result => {
+    this.request.updateUsername(this.oldUsername, this.newUsername).subscribe(result => {
       console.log("Tulos:")
       console.log(result);
+      console.log(result.username);
     });
   }
 

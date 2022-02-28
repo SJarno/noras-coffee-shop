@@ -15,12 +15,8 @@ export class RequestsService {
   }
 
   /* Update username. Consider moving this to own service: */
-  updateUsername(newUsername: any, oldUsername: any, ): Observable<any> {
-    let params = new HttpParams();
-    params.set("newUsername", newUsername);
-    params.set("oldUsername", oldUsername);
-    console.log("Params: ");
-    console.log(params);
+  updateUsername(oldUsername: any, newUsername: any): Observable<any> {
+    
     return this.http.put(`${this.url}update-username/${oldUsername}/${newUsername}`, {
       observe: 'response'
     });
