@@ -33,11 +33,11 @@ public class UserAccountController {
     private SecurityContextService securityContextService;
 
     @Transactional
-    // @PutMapping("/update-username/{oldUsername}/{newUsername}")
     @PutMapping("/update-username")
     public Map<String, String> updateUsername(
             @RequestBody String newUsername,
             HttpServletRequest request) {
+                /* Move service -> */
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("Details: ");
         System.out.println(auth.getDetails());
@@ -48,7 +48,6 @@ public class UserAccountController {
 
         if (userAccount.isPresent());
         userAccount.get().setUsername(newUsername);
-        //securityContextService.refreshAuth(newUsername, userAccount.get().getPassword(), request);
 
         testmap.put("username", newUsername);
         return testmap;
