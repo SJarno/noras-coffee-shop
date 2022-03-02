@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { RequestsService } from '../services/requests.service';
 
@@ -12,9 +13,10 @@ export class SettingsComponent implements OnInit {
   newUsername?: string;
   oldUsername?: string;
 
-  constructor(public authService: AuthService, private request: RequestsService) {
-    
-   }
+  constructor(public authService: AuthService, 
+    private request: RequestsService, private route: Router) {
+
+  }
 
   ngOnInit(): void {
     this.newUsername = this.authService.username;
@@ -24,14 +26,23 @@ export class SettingsComponent implements OnInit {
     this.displayModify = !this.displayModify;
   }
   updateUsername(): any {
+    console.log("Kun vaihdetaan käyttäjätunnus")
     console.log(this.newUsername);
     console.log(this.authService.username);
-    
-    this.request.updateUsername(this.oldUsername, this.newUsername).subscribe(result => {
-      console.log("Tulos:")
-      console.log(result);
-      console.log(result.username);
+    console.log("Credentials before update: ");
+    console.log(this.authService.credentials);
+
+    this.request.updateUsername(this.newUsername).subscribe(result => {
+      //Päivitetään käyttäjänimi
+      this.authService.username = result.body.username;
+      this.authService.credentials.username = result.body.username;
+      console.log("Credentials after update: ");
+      console.log(this.authService.credentials);
+      this.authService.updateUsername(this.authService.credentials, () => {
+        this.route.navigateByUrl("/dashboard");
+      })
     });
+
   }
 
 }
