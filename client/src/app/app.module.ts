@@ -13,9 +13,17 @@ import { GreetingPageComponent } from './greeting-page/greeting-page.component';
 import { FormsModule } from '@angular/forms';
 
 import {MatSelectModule} from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { XhrInterceptorService } from './services/xhr-interceptor.service';
 import { MessagesComponent } from './messages/messages.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardTabComponent } from './dashboard-tab/dashboard-tab.component';
+import { UsersComponent } from './users/users.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +33,11 @@ import { MessagesComponent } from './messages/messages.component';
     FooterComponent,
     MainComponent,
     GreetingPageComponent,
-    MessagesComponent
+    MessagesComponent,
+    DashboardComponent,
+    DashboardTabComponent,
+    UsersComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +45,8 @@ import { MessagesComponent } from './messages/messages.component';
     HttpClientModule,
     FormsModule,
     MatSelectModule,
+    MatTabsModule,
+    BrowserAnimationsModule,
     FontAwesomeModule
   ],
   providers: [

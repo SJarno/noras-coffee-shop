@@ -7,7 +7,7 @@
         <button (click)="toggleNavBar()" class="mobile-menu-bar">
             <fa-icon [icon]="faBars"></fa-icon>
         </button>
-        <section class="nav-links" #testi>
+        <section class="nav-links" #navContent>
             <ul>
                 <li>
                     <a routerLink="/">Cafeteria</a>
@@ -20,14 +20,19 @@
                         Shop online
                     </a>
                 </li>
+                <li>
+                    <a routerLink="dashboard">Dashboard</a>
+                </li>
                 <div>
                     <button (click)="toggleLoginForm()" *ngIf="!auth.authenticated" class="loginBtn">Login to service</button>
                     <section class="login-section" *ngIf="showLoginForm"> 
                         <form role="form" class="login-form" (submit)="login()" *ngIf="!auth.authenticated">
                             <label for="username">Username: </label>
-                            <input type="text" name="username" [(ngModel)]="credentials.username">
+                            <input type="text" name="username" 
+                                [(ngModel)]="auth.credentials.username">
                             <label for="password">Password: </label>
-                            <input type="password" name="password" [(ngModel)]="credentials.password">
+                            <input type="password" name="password" 
+                                [(ngModel)]="auth.credentials.password">
                             <button type="submit">Login</button>
                         </form> 
                     </section>

@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
-  credentials = { 'username': '', 'password': '' };
+  /* credentials = { 'username': '', 'password': '' }; */
   logoText: string;
   showNavBar: boolean;
   showLoginForm: boolean;
@@ -19,7 +19,7 @@ export class NavigationComponent implements OnInit {
   faBars = faBars;
   /* authenticated: boolean = false; */
 
-  @ViewChild('testi')
+  @ViewChild('navContent')
   navItems?: ElementRef;
 
   constructor(public auth: AuthService, private route: Router) {
@@ -30,8 +30,6 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
   }
 
   toggleNavBar() {
@@ -49,15 +47,17 @@ export class NavigationComponent implements OnInit {
   }
   
   login() {
-    this.auth.login(this.credentials, () => {
-      
+    this.auth.login(this.auth.credentials, () => {
       this.route.navigateByUrl("/");
+      this.showLoginForm = false;
     });
     return false;
   }
   logout() {
     this.auth.logout();
-    this.credentials = { 'username': '', 'password': '' };
+    this.auth.credentials = { 'username': '', 'password': '' };
+    this.route.navigateByUrl("/");
+    this.showLoginForm = false;
   }
 
 }

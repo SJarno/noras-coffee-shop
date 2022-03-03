@@ -11,6 +11,7 @@ export class AuthService {
   username?: string;
   authenticated: boolean = false;
   roles?: [];
+  credentials = { 'username': '', 'password': '' };
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
@@ -25,15 +26,15 @@ export class AuthService {
       .subscribe();
   }
 
-  authenticate(credentials: any, callback: any, errorHandler: any) {
+  authenticate(credentials: any, callback: any, errorHandler: any, successMessage: string) {
     const headers = new HttpHeaders(credentials ? {
-      authorization: 'Basic '+btoa(`${credentials.username}:${credentials.password}`)
+      authorization: 'Basic '+btoa(`${this.credentials.username}:${this.credentials.password}`)
     } : {});
     this.http.get(environment.baseUrl + "user", { headers: headers })
       .pipe(
         catchError(errorHandler))
         .subscribe(response => {
-          console.log("Vastaus");
+          console.log("Vastaus kun autentikoidaan: ");
           console.log(response);
 
           if (response['name']) {
@@ -41,7 +42,7 @@ export class AuthService {
             this.authenticated = true;
             console.log(response['authorities']);
             this.roles = response['authorities'];
-            this.messageService.addSuccessMessage("Login successfull!");
+            //this.messageService.addSuccessMessage(successMessage);
           } else {
             this.username = '';
             this.authenticated = false;
@@ -53,10 +54,14 @@ export class AuthService {
 
   }
   login(credentials: any, callback: any) {
-    this.authenticate(credentials, callback, this.handleLoginError<any>('login', []));
+    this.authenticate(credentials, callback, this.handleLoginError<any>('login', []), "Login success");
   }
   checkAuthentication(credentials: any, callback:any) {
-    this.authenticate(credentials, callback, this.handleCheckAuthError<any>('auth check', []));
+    this.authenticate(credentials, callback, this.handleCheckAuthError<any>('auth check', []), "Auth success");
+  }
+  updateUsername(credentials: any, callback: any) {
+    console.log("Ollaan täällä authissa");
+    this.authenticate(credentials, callback, this.handleLoginError<any>('update username', []), "Auth success");
   }
   
   private handleLoginError<T>(operation = 'operation', result?: T) {
@@ -67,6 +72,7 @@ export class AuthService {
       console.error(result);
       console.error("Status");
       console.error(error.status);
+      
       if (error.status === 401) {
         this.messageService.addErrorMessage(`Wrong username or password`);
         

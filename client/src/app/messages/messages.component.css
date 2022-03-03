@@ -4,15 +4,16 @@
     top: -70rem;
     display: flex;
     justify-content: center;
+    z-index: 99;
     
 }
 
 div.content {
+    color: whitesmoke;
     padding: 1rem;
 }
 
 .alert-error {
-    color: whitesmoke;
     background-color: rgba(197, 28, 28, 0.5);
     
 }
