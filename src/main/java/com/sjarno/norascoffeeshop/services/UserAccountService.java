@@ -62,7 +62,6 @@ public class UserAccountService {
             throw new Exception("Username is taken!");
         }
         existingUser.setUsername(newUsername.trim());
-        
         return existingUser;
     }
     @Transactional

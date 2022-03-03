@@ -27,7 +27,7 @@ public class TestSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         String[] putMethods = new String[] {
-                "/update-username"
+                "/update-username", "/update-password"
         };
 
         String[] getMethods = new String[] {
