@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class SecurityContextService {
 
-    @Autowired
-    private AuthenticationManager authManager;
+    /* @Autowired
+    private AuthenticationManager authManager; */
 
-    public void refreshAuth(
+    /* public void refreshAuth(
         String username, 
         String password, 
         HttpServletRequest request) {
@@ -26,6 +26,10 @@ public class SecurityContextService {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(auth);
 
+    } */
+
+    public Authentication getSecurityContext() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
     
 }

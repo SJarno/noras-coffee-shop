@@ -13,7 +13,7 @@ export class SettingsComponent implements OnInit {
   newUsername?: string;
   oldUsername?: string;
 
-  constructor(public authService: AuthService, 
+  constructor(public authService: AuthService,
     private request: RequestsService, private route: Router) {
 
   }
@@ -34,8 +34,15 @@ export class SettingsComponent implements OnInit {
 
     this.request.updateUsername(this.newUsername).subscribe(result => {
       //Päivitetään käyttäjänimi
-      this.authService.username = result.body.username;
-      this.authService.credentials.username = result.body.username;
+      console.log("Tulostetaan vastaus: ");
+      console.log(result);
+      console.log("Tulostetaan body:")
+      console.log(result.body);
+      if (result.status === 200) {
+        this.authService.username = result.body.username;
+        this.authService.credentials.username = result.body.username;
+      }
+
       console.log("Credentials after update: ");
       console.log(this.authService.credentials);
       this.authService.updateUsername(this.authService.credentials, () => {

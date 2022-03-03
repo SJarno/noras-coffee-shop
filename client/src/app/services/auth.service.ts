@@ -42,7 +42,7 @@ export class AuthService {
             this.authenticated = true;
             console.log(response['authorities']);
             this.roles = response['authorities'];
-            this.messageService.addSuccessMessage(successMessage);
+            //this.messageService.addSuccessMessage(successMessage);
           } else {
             this.username = '';
             this.authenticated = false;
@@ -60,7 +60,8 @@ export class AuthService {
     this.authenticate(credentials, callback, this.handleCheckAuthError<any>('auth check', []), "Auth success");
   }
   updateUsername(credentials: any, callback: any) {
-    this.authenticate(credentials, callback, this.handleLoginError<any>('update username', []), "Username updated");
+    console.log("Ollaan täällä authissa");
+    this.authenticate(credentials, callback, this.handleLoginError<any>('update username', []), "Auth success");
   }
   
   private handleLoginError<T>(operation = 'operation', result?: T) {
@@ -71,6 +72,7 @@ export class AuthService {
       console.error(result);
       console.error("Status");
       console.error(error.status);
+      
       if (error.status === 401) {
         this.messageService.addErrorMessage(`Wrong username or password`);
         
