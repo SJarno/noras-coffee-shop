@@ -37,11 +37,9 @@ public class UserAccountController {
     @Autowired
     private UserAccountService userAccountService;
 
-    @Autowired
-    private SecurityContextService securityContextService;
+    
 
     /* Update username */
-   /*  @Transactional */
     @PutMapping("/update-username")
     public ResponseEntity<?> updateUsername(
             @RequestBody String newUsername,

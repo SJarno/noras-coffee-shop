@@ -41,10 +41,14 @@ public class ProdSecurityConfiguration extends WebSecurityConfigurerAdapter {
         String[] publicGetMethods = new String[] {
                 "/greet"
         };
+        String[] putMethods = new String[] {
+            "/update-username"
+        };
 
         http.httpBasic()
                 .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.PUT, putMethods).authenticated()
                 .antMatchers(staticClientResources).permitAll()
                 .antMatchers(HttpMethod.GET, publicGetMethods).permitAll()
                 .anyRequest().authenticated()
