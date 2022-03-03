@@ -43,4 +43,61 @@
             </table>
         </form>
     </article>
+    
+    <article>
+        <form>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            <h4>Update password</h4>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="newPassword">New password</label>
+                        </td>
+                        <td>
+                            <input type="text" name="newPassword" id="newPassword"
+                                [(ngModel)]="newPassword">
+                        </td>
+                        <hr>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="retypePassword">Retype password</label>
+                        </td>
+                        <td>
+                            <input type="password" name="retypePassword" id="retypePassword"
+                                [(ngModel)]="retypedPassword">
+                        </td>
+                    </tr>
+                    <tr>
+                       <th colspan="2">
+                           <hr>
+                       </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="oldPassword">Old password</label>
+                        </td>
+                        <td>
+                            <input type="password" name="oldPassword" id="oldPassword"
+                                [(ngModel)]="oldPassword">
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            <button type="submit" (click)="updatePassword()">Update password</button>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </article>
 </section>

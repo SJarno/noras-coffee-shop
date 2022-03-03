@@ -45,7 +45,7 @@ public class DevSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/greet"
         };
         String[] putMethods = new String[] {
-            "/update-username"
+            "/update-username", "/update-password"
         };
 
         http.headers().frameOptions().sameOrigin();

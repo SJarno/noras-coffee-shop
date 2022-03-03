@@ -20,7 +20,7 @@
                         Shop online
                     </a>
                 </li>
-                <li>
+                <li *ngIf="auth.authenticated">
                     <a routerLink="dashboard">Dashboard</a>
                 </li>
                 <div>

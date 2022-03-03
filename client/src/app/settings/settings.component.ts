@@ -12,6 +12,10 @@ export class SettingsComponent implements OnInit {
   displayModify: boolean = false;
   newUsername?: string;
   oldUsername?: string;
+ 
+  newPassword?: any;
+  oldPassword?: string;
+  retypedPassword?: string;
 
   constructor(public authService: AuthService,
     private request: RequestsService, private route: Router) {
@@ -50,6 +54,22 @@ export class SettingsComponent implements OnInit {
       })
     });
 
+  }
+  updatePassword() {
+    this.request.updatePassword(this.newPassword, this.oldPassword).subscribe(result => {
+      console.log("Tulos");
+      console.log(result);
+      if (result.status === 200) {
+        console.log("Päivitetty juu");
+        this.authService.credentials.password = this.newPassword;
+      }
+      this.authService.updateUsername(this.authService.credentials, () => {
+        this.route.navigateByUrl("/dashboard");
+      })
+    });
+  }
+  private passwordsEquals() {
+    return this.oldPassword === this.authService.credentials.password && this.newPassword === this.retypedPassword;
   }
 
 }

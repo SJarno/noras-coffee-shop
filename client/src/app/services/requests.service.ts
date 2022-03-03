@@ -26,9 +26,25 @@ export class RequestsService {
           catchError(this.handleError<any>('Update username', []))
         );
   }
+  updatePassword(newPassword: any, oldPassword: any) {
+    const params = new HttpParams()
+      .set('newPassword', newPassword)
+      .set('oldPassword', oldPassword);
+    console.log(params.toString());
+    return this.http.put<any>(`${this.url}update-password`,
+      params,
+        { observe: 'response'})
+          .pipe(
+            tap(_ => this.messages.addSuccessMessage("Password updated")),
+            catchError(this.handleError<any>("Update password", []))
+            );
+  }
   private handleError<T>(operation = 'operation', result?:T) {
     return (error: any): Observable<T> => {
       console.error("Tapahtui virhe "+error.error);
+      console.error(error);
+      console.log("Status");
+      console.log(error.status);
       this.messages.addErrorMessage(error.error);
       return of(result as T);
     };

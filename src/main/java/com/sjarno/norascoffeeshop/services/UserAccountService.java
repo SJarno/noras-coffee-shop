@@ -48,7 +48,8 @@ public class UserAccountService {
         userAccountRepository.save(newUser);
     }
     public UserAccount getUserAccountData() {
-        Optional<UserAccount> userAccount =  this.userAccountRepository.findByUsername(securityContextService.getSecurityContext().getName());
+        Optional<UserAccount> userAccount =  this.userAccountRepository.findByUsername(
+            securityContextService.getSecurityContext().getName());
         if (userAccount.isPresent()) {
             return userAccount.get();
         }
@@ -64,6 +65,17 @@ public class UserAccountService {
         
         return existingUser;
     }
+    @Transactional
+    public UserAccount updatePassword(String newPassword, String oldPassword) {
+        UserAccount existingUser = getUserAccountData();
+        if (passwordEncoder.matches(oldPassword, existingUser.getPassword())) {
+            existingUser.setPassword(passwordEncoder.encode(newPassword));
+            return existingUser;
+        }
+        throw new IllegalArgumentException("Wrong credentials");
+        
+    }
+
     private boolean checkIfUsernameTaken(String username) {
         Optional<UserAccount> userAccount = this.userAccountRepository.findByUsername(username);
         return userAccount.isPresent();

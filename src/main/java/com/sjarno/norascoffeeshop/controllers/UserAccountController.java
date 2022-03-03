@@ -2,24 +2,17 @@ package com.sjarno.norascoffeeshop.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.sjarno.norascoffeeshop.models.UserAccount;
 import com.sjarno.norascoffeeshop.repositories.UserAccountRepository;
-import com.sjarno.norascoffeeshop.security.SecurityContextService;
 import com.sjarno.norascoffeeshop.services.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,14 +51,21 @@ public class UserAccountController {
     }
     /* Update password */
     @PutMapping("/update-password")
-    public void updatePassword(
-        @RequestBody String oldPassword,
-        @RequestBody String newPassword
+    public ResponseEntity<?> updatePassword(
+        @RequestParam String newPassword,
+        @RequestParam String oldPassword
     ) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<UserAccount> userAccount = this.userAccountRepository.findByUsername(auth.getName());
-        if (passwordEncoder.matches(oldPassword, userAccount.get().getPassword())) {
-            userAccount.get().setPassword(passwordEncoder.encode(newPassword));
+        Map<String, UserAccount> result = new HashMap<>();
+        try {
+            System.out.println();
+            System.out.println("Uusi salasana: "+newPassword);
+            System.out.println("Vanha salasana: "+oldPassword);
+            System.out.println();
+            UserAccount updatedAccount = userAccountService.updatePassword(newPassword, oldPassword);
+            result.put("user", updatedAccount);
+            return new  ResponseEntity<Map<String, UserAccount>>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
         
     }
