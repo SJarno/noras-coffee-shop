@@ -26,13 +26,14 @@ public class UserAccountServiceTest {
 
     @Test
     void testCreateUserAdmin() {
-        UserAccount userAccount = new UserAccount();
-        userAccount.setUsername("Mikko");
+        userAccountService.createUserAdmin();
+        assertEquals(1, userAccountRepository.findAll().size());
     }
 
     @Test
     @WithMockUser
     void testGetUserAccountData() {
+        userAccountService.createUserAdmin();
         assertEquals("user", userAccountService.getUserAccountData().getUsername());
         UserAccount userAccount = userAccountRepository.findByUsername("user").get();
         UserAccount accountFromService = userAccountService.getUserAccountData();
@@ -42,6 +43,7 @@ public class UserAccountServiceTest {
     @Test
     @WithMockUser
     void testUpdateUsername() throws Exception {
+        userAccountService.createUserAdmin();
         assertEquals("user", userAccountService.getUserAccountData().getUsername());
         userAccountService.updateUsername("Mikko");
         assertEquals("Mikko", userAccountRepository.findByUsername("Mikko").get().getUsername());
@@ -51,6 +53,7 @@ public class UserAccountServiceTest {
     }
     @Test
     void testInitialDataExists() {
+        userAccountService.createUserAdmin();
         assertEquals(1, userAccountRepository.findAll().size());
         assertEquals("user", userAccountRepository.findByUsername("user").get().getUsername());
     }
