@@ -68,6 +68,7 @@ public class UserAccountService {
         }
         throw new UsernameNotFoundException("User not found");
     }
+    /* Find all user by user role */
 
     @Transactional
     public UserAccount updateUsername(String newUsername) throws Exception {
