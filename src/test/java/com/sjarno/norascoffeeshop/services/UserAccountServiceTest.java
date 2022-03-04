@@ -3,7 +3,13 @@ package com.sjarno.norascoffeeshop.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.sjarno.norascoffeeshop.models.RoleType;
 import com.sjarno.norascoffeeshop.models.UserAccount;
+import com.sjarno.norascoffeeshop.models.UserRole;
 import com.sjarno.norascoffeeshop.repositories.UserAccountRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -49,6 +55,10 @@ public class UserAccountServiceTest {
         this.userAccountService.createNewEmployee(this.newUser);
         assertEquals(1, this.userAccountRepository.findAll().size());
         assertEquals(2, this.userAccountService.getUserAccountData().getId());
+        assertEquals("mikko", this.userAccountService.getUserAccountData().getUsername());
+        assertEquals(
+            new ArrayList<>(Arrays.asList(new UserRole(RoleType.ROLE_EMPLOYEE))), 
+            this.userAccountService.getUserAccountData().getRoles());
     }
     @Test
     @WithMockUser(username = "mik")
