@@ -2,11 +2,17 @@ header {
     line-height: 4rem;
 }
 
+h1 {
+    padding: 1rem;
+}
+
 nav {
     /*  */
     position: absolute;
     width: 100%;
     background-color: inherit;
+    z-index: 9;
+    opacity: 0.9;
 }
 
 .nav-links {
@@ -52,7 +58,7 @@ section.login-section {
 
 form.login-form {
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.9);
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -74,6 +80,7 @@ form.login-form >* {
 @media only screen and (min-width: 768px) {
     nav {
         position: relative;
+        opacity: 1;
     }
     .nav-links {
         display: flex;
@@ -83,9 +90,9 @@ form.login-form >* {
         flex-direction: row;
     }
 
-    /* form.login-form {
-        display: block;
-    } */
+    form.login-form {
+        opacity: 1;
+    }
     .mobile-menu-bar { 
         display: none;
     }
