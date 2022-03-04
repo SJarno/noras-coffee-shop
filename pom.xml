@@ -90,6 +90,7 @@
 						<!-- skipataan app-tiedosto -->
 						<exclude>**/*NorasCoffeeShopApplication.*</exclude>
 						<exclude>**/*DevSecurityConfiguration.*</exclude>
+						<exclude>**/ProdSecurityConfiguration.*</exclude>
 					</excludes>
 				</configuration>
 

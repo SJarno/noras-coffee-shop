@@ -8,7 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import lombok.AllArgsConstructor;
@@ -22,9 +25,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class UserAccount extends AbstractPersistable<Long> {
 
+    @Length(min = 4, max = 40, message = "Username length must be between 4 and 40 characters")
+    @NotBlank
     @Column(name = "username")
     private String username;
 
+    @Length(min = 4, max = 100)
+    @NotBlank
     @Column(name = "password")
     private String password;
 
@@ -32,9 +39,5 @@ public class UserAccount extends AbstractPersistable<Long> {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<UserRole> roles;
 
-    
-    /* public List<UserRole> getRoles() {
-        return this.roles;
-    } */
 
 }

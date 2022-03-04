@@ -22,22 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserAccountController {
 
     @Autowired
-    private UserAccountRepository userAccountRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private UserAccountService userAccountService;
-
-    
 
     /* Update username */
     @PutMapping("/update-username")
     public ResponseEntity<?> updateUsername(
             @RequestBody String newUsername,
             HttpServletRequest request) {
-        
+
         Map<String, String> result = new HashMap<>();
         try {
             UserAccount user = userAccountService.updateUsername(newUsername.trim());
@@ -49,25 +41,21 @@ public class UserAccountController {
         }
 
     }
+
     /* Update password */
     @PutMapping("/update-password")
     public ResponseEntity<?> updatePassword(
-        @RequestParam String newPassword,
-        @RequestParam String oldPassword
-    ) {
+            @RequestParam String newPassword,
+            @RequestParam String oldPassword) {
         Map<String, UserAccount> result = new HashMap<>();
         try {
-            System.out.println();
-            System.out.println("Uusi salasana: "+newPassword);
-            System.out.println("Vanha salasana: "+oldPassword);
-            System.out.println();
             UserAccount updatedAccount = userAccountService.updatePassword(newPassword, oldPassword);
             result.put("user", updatedAccount);
-            return new  ResponseEntity<Map<String, UserAccount>>(result, HttpStatus.OK);
+            return new ResponseEntity<Map<String, UserAccount>>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        
+
     }
 
 }

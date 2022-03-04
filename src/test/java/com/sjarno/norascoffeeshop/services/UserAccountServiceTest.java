@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.sjarno.norascoffeeshop.models.UserAccount;
 import com.sjarno.norascoffeeshop.repositories.UserAccountRepository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +28,12 @@ public class UserAccountServiceTest {
     @Autowired
     private UserAccountRepository userAccountRepository;
 
+    UserAccount newUser;
+
+    @BeforeEach
+    void setUp() {
+        this.newUser = new UserAccount();
+    }
 
     @Test
     void testCreateUserAdmin() {
@@ -35,32 +42,89 @@ public class UserAccountServiceTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(username = "mikko")
+    void testCreateEmployee() {
+        this.newUser.setUsername("mikko");
+        this.newUser.setPassword("passu");
+        this.userAccountService.createNewEmployee(this.newUser);
+        assertEquals(1, this.userAccountRepository.findAll().size());
+        assertEquals(2, this.userAccountService.getUserAccountData().getId());
+    }
+    @Test
+    @WithMockUser(username = "mik")
+    void testWrongValuesThrowsException() {
+        Exception usernameLengthException = assertThrows(Exception.class, () -> {
+            this.newUser.setUsername("mik");
+            this.newUser.setPassword("password");
+            this.userAccountService.createNewEmployee(this.newUser);
+        });
+        assertEquals("Username length violation", usernameLengthException.getMessage());
+
+        Exception usernameEmptyException = assertThrows(Exception.class, () -> {
+            this.newUser.setUsername("");
+            this.userAccountService.createNewEmployee(this.newUser);
+        });
+        assertEquals("Username cannot be empty", usernameEmptyException.getMessage());
+
+        Exception passwordLengthException = assertThrows(Exception.class, () -> {
+            this.newUser.setUsername("username");
+            this.newUser.setPassword("pas");
+            this.userAccountService.createNewEmployee(this.newUser);
+        });
+        assertEquals("Password length violation", passwordLengthException.getMessage());
+
+        Exception passwordNotEmptyException = assertThrows(Exception.class, () -> {
+            this.newUser.setUsername("username");
+            this.newUser.setPassword("");
+            this.userAccountService.createNewEmployee(this.newUser);
+        });
+        assertEquals("Password cannot be empty", passwordNotEmptyException.getMessage());
+    }
+
+    @Test
+    void addingSameUsernameThrowsException() {
+        assertEquals(0, this.userAccountRepository.findAll().size());
+        Exception ex = assertThrows(Exception.class, () -> {
+            this.newUser.setUsername("mikko");
+            this.newUser.setPassword("passu");
+            this.userAccountService.createNewEmployee(this.newUser);
+            UserAccount userAccount = new UserAccount();
+            userAccount.setUsername("mikko");
+            userAccount.setPassword("pass");
+            this.userAccountService.createNewEmployee(userAccount);
+        });
+        assertEquals(1, this.userAccountRepository.findAll().size());
+        assertEquals("Username taken.", ex.getMessage());
+    }
+
+    @Test
+    @WithMockUser(username = "admin-nora")
     void testGetUserAccountData() {
         userAccountService.createUserAdmin();
-        assertEquals("user", userAccountService.getUserAccountData().getUsername());
-        UserAccount userAccount = userAccountRepository.findByUsername("user").get();
+        assertEquals("admin-nora", userAccountService.getUserAccountData().getUsername());
+        UserAccount userAccount = userAccountRepository.findByUsername("admin-nora").get();
         UserAccount accountFromService = userAccountService.getUserAccountData();
         assertEquals(userAccount.getId(), accountFromService.getId());
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(username = "admin-nora")
     void testUpdateUsername() throws Exception {
         userAccountService.createUserAdmin();
-        assertEquals("user", userAccountService.getUserAccountData().getUsername());
+        assertEquals("admin-nora", userAccountService.getUserAccountData().getUsername());
         userAccountService.updateUsername("Mikko");
         assertEquals("Mikko", userAccountRepository.findByUsername("Mikko").get().getUsername());
         assertEquals(1, userAccountRepository.findAll().size());
     }
+
     @Test
-    @WithMockUser
+    @WithMockUser(username = "admin-nora")
     void takenUsernameThrowsError() {
         userAccountService.createUserAdmin();
         Exception usernameTakenError = assertThrows(Exception.class, () -> {
-            userAccountService.updateUsername("user");
+            userAccountService.updateUsername("admin-nora");
         });
-        assertEquals("Username is taken!", usernameTakenError.getMessage());
+        assertEquals("Username taken.", usernameTakenError.getMessage());
     }
 
     @Test
@@ -77,17 +141,19 @@ public class UserAccountServiceTest {
     void testInitialDataExists() {
         userAccountService.createUserAdmin();
         assertEquals(1, userAccountRepository.findAll().size());
-        assertEquals("user", userAccountRepository.findByUsername("user").get().getUsername());
+        assertEquals("admin-nora", userAccountRepository.findByUsername("admin-nora").get().getUsername());
     }
+
     @Test
-    @WithMockUser
+    @WithMockUser(username = "admin-nora")
     void testCanUpdatePassword() {
         userAccountService.createUserAdmin();
-        UserAccount user = userAccountService.updatePassword("new", "pass");
-        assertEquals("user", user.getUsername());
+        UserAccount user = userAccountService.updatePassword("new", "pass-nora");
+        assertEquals("admin-nora", user.getUsername());
     }
+
     @Test
-    @WithMockUser
+    @WithMockUser(username = "admin-nora")
     void wrongCredentialsThrowsError() {
         userAccountService.createUserAdmin();
         Exception wrongCredentials = assertThrows(IllegalArgumentException.class, () -> {
@@ -95,4 +161,5 @@ public class UserAccountServiceTest {
         });
         assertEquals("Wrong credentials", wrongCredentials.getMessage());
     }
+
 }
