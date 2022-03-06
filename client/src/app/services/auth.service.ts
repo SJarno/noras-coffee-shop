@@ -28,7 +28,7 @@ export class AuthService {
 
   authenticate(credentials: any, callback: any, errorHandler: any, successMessage: string) {
     const headers = new HttpHeaders(credentials ? {
-      authorization: 'Basic '+btoa(`${this.credentials.username}:${this.credentials.password}`)
+      authorization: 'Basic '+btoa(`${credentials.username}:${credentials.password}`)
     } : {});
     this.http.get(environment.baseUrl + "user", { headers: headers })
       .pipe(
@@ -40,7 +40,6 @@ export class AuthService {
           if (response['name']) {
             this.username = response['name'];
             this.authenticated = true;
-            console.log(response['authorities']);
             this.roles = response['authorities'];
             //this.messageService.addSuccessMessage(successMessage);
           } else {
@@ -49,6 +48,8 @@ export class AuthService {
             this.roles = [];
             
           }
+          console.log("Tunnus ja salasana:")
+          console.log(this.credentials);
           return callback && callback();
         });
 

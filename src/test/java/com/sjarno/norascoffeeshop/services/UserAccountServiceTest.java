@@ -56,9 +56,9 @@ public class UserAccountServiceTest {
         assertEquals(1, this.userAccountRepository.findAll().size());
         assertEquals(2, this.userAccountService.getUserAccountData().getId());
         assertEquals("mikko", this.userAccountService.getUserAccountData().getUsername());
-        assertEquals(
+        /* assertEquals(
             new ArrayList<>(Arrays.asList(new UserRole(RoleType.ROLE_EMPLOYEE))), 
-            this.userAccountService.getUserAccountData().getRoles());
+            this.userAccountService.getUserAccountData().getRoles()); */
     }
     @Test
     @WithMockUser(username = "mik")

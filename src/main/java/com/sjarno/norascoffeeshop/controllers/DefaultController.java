@@ -29,7 +29,7 @@ public class DefaultController {
         return greeting;
         
     }
-    /* @PostConstruct
+    @PostConstruct
     public void init() {
         try {
             userService.createUserAdmin();
@@ -39,6 +39,6 @@ public class DefaultController {
             System.out.println();
         }
         
-    } */
+    }
     
 }

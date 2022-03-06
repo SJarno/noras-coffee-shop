@@ -1,5 +1,18 @@
 section {
-    justify-content: space-around;
     display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
+
+section > * {
+    flex-basis: 100%;
+}
+
+div.employee-management {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
 

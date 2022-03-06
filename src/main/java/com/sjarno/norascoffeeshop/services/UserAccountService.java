@@ -2,6 +2,7 @@ package com.sjarno.norascoffeeshop.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import com.sjarno.norascoffeeshop.models.RoleType;
@@ -28,37 +29,45 @@ public class UserAccountService {
     private UserRoleRepository userRoleRepository;
 
     @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private SecurityContextService securityContextService;
 
     /* For quick testing */
+    @Transactional
     public void createUserAdmin() {
         userRoleRepository.deleteAll();
         userAccountRepository.deleteAll();
-        UserRole role = new UserRole();
-        role.setRoleType(RoleType.ROLE_ADMIN);
 
-        userRoleRepository.save(role);
+        userRoleService.addBasicRoleTypes();
+
         UserAccount newUser = new UserAccount(
-                "admin-nora",
-                passwordEncoder.encode("pass-nora"),
-                new ArrayList<>(Arrays.asList(role)));
+                "nora",
+                passwordEncoder.encode("pass"),
+                new ArrayList<>());
 
+        Optional<UserRole> role = this.userRoleRepository.findByRoleType(RoleType.ROLE_ADMIN);
+
+        newUser.getRoles().add(role.get());
         userAccountRepository.save(newUser);
+
     }
 
     public void createNewEmployee(UserAccount employee) {
-            validateUsername(employee.getUsername());
-            validatePassword(employee.getPassword());
-            UserRole employeeRole = new UserRole();
-            employeeRole.setRoleType(RoleType.ROLE_EMPLOYEE);
-            this.userRoleRepository.save(employeeRole);
-            employee.setRoles(new ArrayList<>(Arrays.asList(employeeRole)));
-            userAccountRepository.save(employee);
-        
+        validateUsername(employee.getUsername());
+        validatePassword(employee.getPassword());
+        UserRole employeeRole = new UserRole();
+        employeeRole.setRoleType(RoleType.ROLE_EMPLOYEE);
+        this.userRoleRepository.save(employeeRole);
+        employee.setRoles(new ArrayList<>(Arrays.asList(employeeRole)));
+        userAccountRepository.save(employee);
+
     }
+
     /* Default option for getting authenticated user data */
     public UserAccount getUserAccountData() {
         Optional<UserAccount> userAccount = this.userAccountRepository.findByUsername(
@@ -93,6 +102,7 @@ public class UserAccountService {
         Optional<UserAccount> userAccount = this.userAccountRepository.findByUsername(username);
         return userAccount.isPresent();
     }
+
     private void validateUsername(String username) {
         if (checkIfUsernameTaken(username)) {
             throw new DataIntegrityViolationException("Username taken.");
@@ -103,8 +113,9 @@ public class UserAccountService {
         if (username.length() < 4 || username.length() > 40) {
             throw new DataIntegrityViolationException("Username length violation");
         }
-        
+
     }
+
     private void validatePassword(String password) {
         if (password.isBlank()) {
             throw new DataIntegrityViolationException("Password cannot be empty");
@@ -113,6 +124,5 @@ public class UserAccountService {
             throw new DataIntegrityViolationException("Password length violation");
         }
     }
-    
 
 }

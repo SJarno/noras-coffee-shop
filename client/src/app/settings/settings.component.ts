@@ -52,6 +52,7 @@ export class SettingsComponent implements OnInit {
       this.authService.updateUsername(this.authService.credentials, () => {
         this.route.navigateByUrl("/dashboard");
       })
+      //this.authService.checkAuthentication(undefined, undefined);
     });
 
   }

@@ -1,8 +1,52 @@
 <section>
-    <article>
-        <p>List employees here</p>
-    </article>
-    <aside>
-        <p>show user data here</p>
-    </aside>
+    <h3>Employee settings</h3>
+    <div class="employee-management">
+        <article>
+            <h4>Add new employee</h4>
+            <form (ngSubmit)="addNewEmployee()">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                <h4>Add new employee</h4>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="username">Username:</label>
+                            </td>
+                            <td>
+                                <input type="text" name="username"
+                                    [(ngModel)]="newEmployee.username">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="password">Password:</label>
+                            </td>
+                            <td>
+                                <input type="password" name="password"
+                                    [(ngModel)]="newEmployee.password">
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>
+                                <button type="submit">Save new user</button>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </form>
+        </article>
+        <article>
+            <h4>List employees</h4>
+        </article>
+        <article>
+            <h4>Show data</h4>
+        </article>
+    </div>
 </section>

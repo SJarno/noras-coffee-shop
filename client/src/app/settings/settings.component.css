@@ -1,8 +1,13 @@
 section {
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
+
+/* section > * {
+    flex-basis: 51%;
+} */
 
 article {
     margin: 1rem;
@@ -12,14 +17,27 @@ article {
 form {
     background: rgba(0, 0, 0, 0.5);
     min-height: 10rem;
+    width: 100%;
+    min-width: 25rem;
 }
 
-table {
+table, tr {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+table, tr > * {
+    flex-basis: 100%;
 }
 
 @media only screen and (min-width: 768px) {
     form {
         min-width: 40rem;
+    }
+    table, tr {
+        display: revert;
     }
 }

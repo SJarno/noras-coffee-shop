@@ -44,17 +44,20 @@ header, footer {
 }
 
 /* Styling for tabs */
-.mat-tab-label{
+.mat-tab-label {
     font-size: 3.2rem;
-    
- } 
+
+}
 
 .mat-tab-labels {
     justify-content: center;
 }
 
- .mat-tab-header {
+.mat-tab-header {
     border-bottom: 0.1rem solid;
- }
+}
 
- 
+
+.mat-tab-body-content.ng-tns-c15-0.ng-trigger.ng-trigger-translateTab {
+    overflow: hidden;
+}

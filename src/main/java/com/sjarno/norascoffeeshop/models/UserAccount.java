@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
@@ -36,7 +39,9 @@ public class UserAccount extends AbstractPersistable<Long> {
     private String password;
 
     // enum typed roles as string
-    @ElementCollection(fetch = FetchType.EAGER)
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    //@ElementCollection(fetch = FetchType.EAGER)
     private List<UserRole> roles;
 
 
