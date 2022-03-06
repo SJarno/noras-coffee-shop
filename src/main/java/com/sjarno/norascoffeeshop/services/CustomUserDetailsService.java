@@ -7,7 +7,6 @@ import com.sjarno.norascoffeeshop.models.UserAccount;
 import com.sjarno.norascoffeeshop.repositories.UserAccountRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.BeanDefinitionDsl.Role;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

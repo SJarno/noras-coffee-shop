@@ -8,9 +8,7 @@ import com.sjarno.norascoffeeshop.models.RoleType;
 import com.sjarno.norascoffeeshop.models.UserRole;
 import com.sjarno.norascoffeeshop.repositories.UserRoleRepository;
 
-import org.hibernate.usertype.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.BeanDefinitionDsl.Role;
 import org.springframework.stereotype.Service;
 
 @Service

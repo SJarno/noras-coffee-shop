@@ -1,8 +1,6 @@
 package com.sjarno.norascoffeeshop.services;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import com.sjarno.norascoffeeshop.models.RoleType;
@@ -46,27 +44,23 @@ public class UserAccountService {
         userRoleService.addBasicRoleTypes();
 
         UserAccount newUser = new UserAccount(
-                "nora",
+                "admin-nora",
                 passwordEncoder.encode("pass"),
                 new ArrayList<>());
 
         Optional<UserRole> role = this.userRoleRepository.findByRoleType(RoleType.ROLE_ADMIN);
 
         newUser.getRoles().add(role.get());
-        userAccountRepository.save(newUser);
+        this.saveUserAccount(newUser);
 
     }
-
-    public void createNewEmployee(UserAccount employee) {
-        validateUsername(employee.getUsername());
-        validatePassword(employee.getPassword());
-        UserRole employeeRole = new UserRole();
-        employeeRole.setRoleType(RoleType.ROLE_EMPLOYEE);
-        this.userRoleRepository.save(employeeRole);
-        employee.setRoles(new ArrayList<>(Arrays.asList(employeeRole)));
-        userAccountRepository.save(employee);
-
+    public UserAccount saveUserAccount(UserAccount userAccount) {
+        this.validateUsername(userAccount.getUsername());
+        this.validatePassword(userAccount.getPassword());
+        userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+        return this.userAccountRepository.save(userAccount);
     }
+
 
     /* Default option for getting authenticated user data */
     public UserAccount getUserAccountData() {
