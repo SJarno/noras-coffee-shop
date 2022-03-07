@@ -2,8 +2,13 @@ package com.sjarno.norascoffeeshop.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
+import com.sjarno.norascoffeeshop.models.RoleType;
 import com.sjarno.norascoffeeshop.models.UserAccount;
+import com.sjarno.norascoffeeshop.models.UserRole;
 import com.sjarno.norascoffeeshop.repositories.UserAccountRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
@@ -28,6 +34,12 @@ public class UserAccountServiceTest {
     @Autowired
     private UserAccountRepository userAccountRepository;
 
+    @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     UserAccount newUser;
 
     @BeforeEach
@@ -41,53 +53,16 @@ public class UserAccountServiceTest {
         assertEquals(1, userAccountRepository.findAll().size());
     }
 
-    
     @Test
-    @WithMockUser(username = "mik")
-    void testWrongValuesThrowsException() {
-        /* Exception usernameLengthException = assertThrows(Exception.class, () -> {
-            this.newUser.setUsername("mik");
-            this.newUser.setPassword("password");
-            this.userAccountService.createNewEmployee(this.newUser);
-        });
-        assertEquals("Username length violation", usernameLengthException.getMessage()); */
-
-        /* Exception usernameEmptyException = assertThrows(Exception.class, () -> {
-            this.newUser.setUsername("");
-            this.userAccountService.createNewEmployee(this.newUser);
-        });
-        assertEquals("Username cannot be empty", usernameEmptyException.getMessage()); */
-
-        /* Exception passwordLengthException = assertThrows(Exception.class, () -> {
-            this.newUser.setUsername("username");
-            this.newUser.setPassword("pas");
-            this.userAccountService.createNewEmployee(this.newUser);
-        });
-        assertEquals("Password length violation", passwordLengthException.getMessage()); */
-
-        /* Exception passwordNotEmptyException = assertThrows(Exception.class, () -> {
-            this.newUser.setUsername("username");
-            this.newUser.setPassword("");
-            this.userAccountService.createNewEmployee(this.newUser);
-        });
-        assertEquals("Password cannot be empty", passwordNotEmptyException.getMessage()); */
+    void findByUserRole() {
+        userAccountService.createUserAdmin();
+        List<UserRole> roles = this.userRoleService.getAllUserRoleTypes();
+        assertEquals(2, roles.size());
+        List<UserAccount> adminUsers = this.userAccountService.findUsersByUserRole(roles.get(0));
+        assertEquals(1, adminUsers.size());
+        assertEquals("admin-nora", adminUsers.get(0).getUsername());
+        assertEquals(RoleType.ROLE_ADMIN, adminUsers.get(0).getRoles().get(0).getRoleType());
     }
-
-    /* @Test
-    void addingSameUsernameThrowsException() {
-        assertEquals(0, this.userAccountRepository.findAll().size());
-        Exception ex = assertThrows(Exception.class, () -> {
-            this.newUser.setUsername("mikko");
-            this.newUser.setPassword("passu");
-            this.userAccountService.createNewEmployee(this.newUser);
-            UserAccount userAccount = new UserAccount();
-            userAccount.setUsername("mikko");
-            userAccount.setPassword("pass");
-            this.userAccountService.createNewEmployee(userAccount);
-        });
-        assertEquals(1, this.userAccountRepository.findAll().size());
-        assertEquals("Username taken.", ex.getMessage());
-    } */
 
     @Test
     @WithMockUser(username = "admin-nora")
@@ -137,11 +112,13 @@ public class UserAccountServiceTest {
     }
 
     @Test
-    @WithMockUser(username = "admin-nora", password = "pass")
+    @WithMockUser(username = "admin-nora")
     void testCanUpdatePassword() {
         userAccountService.createUserAdmin();
-        UserAccount user = userAccountService.updatePassword("new", "pass");
-        assertEquals("admin-nora", user.getUsername());
+        UserAccount userAccount = this.userAccountService.getUserAccountData();
+        assertTrue(passwordEncoder.matches("pass", userAccount.getPassword()));
+        UserAccount updatedAccount = userAccountService.updatePassword("newPass", "pass");
+        assertEquals("admin-nora", updatedAccount.getUsername());
     }
 
     @Test
