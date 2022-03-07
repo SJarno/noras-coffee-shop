@@ -57,7 +57,7 @@ public class UserAccountServiceTest {
     void findByUserRole() {
         userAccountService.createUserAdmin();
         List<UserRole> roles = this.userRoleService.getAllUserRoleTypes();
-        assertEquals(2, roles.size());
+        assertEquals(3, roles.size());
         List<UserAccount> adminUsers = this.userAccountService.findUsersByUserRole(roles.get(0));
         assertEquals(1, adminUsers.size());
         assertEquals("admin-nora", adminUsers.get(0).getUsername());

@@ -73,6 +73,7 @@ public class UserAccountService {
     }
     /* Find all user by user role */
     public List<UserAccount> findUsersByUserRole(UserRole userRole) {
+        this.userRoleService.findByRoleType(userRole.getRoleType());
         return this.userAccountRepository.findByRolesContaining(userRole);
     }
 
@@ -88,7 +89,7 @@ public class UserAccountService {
     public UserAccount updatePassword(String newPassword, String oldPassword) {
         UserAccount existingUser = getUserAccountData();
         if (passwordEncoder.matches(oldPassword, existingUser.getPassword())) {
-            existingUser.setPassword(passwordEncoder.encode(newPassword));
+            existingUser.setPassword(passwordEncoder.encode(newPassword.trim()));
             return existingUser;
         }
         throw new IllegalArgumentException("Wrong credentials");
@@ -111,7 +112,8 @@ public class UserAccountService {
             throw new IllegalArgumentException("Username cannot be empty");
         }
         if (username.length() < 4 || username.length() > 40) {
-            throw new IllegalArgumentException("Username length violation");
+            throw new IllegalArgumentException(
+                "Username must be between 4 and 40 characters");
         }
 
     }

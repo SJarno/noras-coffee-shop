@@ -18,19 +18,24 @@ public class UserRoleService {
     private UserRoleRepository userRoleRepository;
 
     public void addBasicRoleTypes() {
-        UserRole adminRole = new UserRole();
-        adminRole.setRoleType(RoleType.ROLE_ADMIN);
-        adminRole.setUsers(new ArrayList<>());
-        UserRole employeeRole = new UserRole();
-        employeeRole.setRoleType(RoleType.ROLE_EMPLOYEE);
-        employeeRole.setUsers(new ArrayList<>());
+        UserRole adminRole = new UserRole(
+            RoleType.ROLE_ADMIN, new ArrayList<>()
+        );
+        UserRole employeeRole = new UserRole(
+            RoleType.ROLE_EMPLOYEE, new ArrayList<>()
+        );
+        
+        UserRole customerRole = new UserRole(
+            RoleType.ROLE_CUSTOMER, new ArrayList<>());
         try {
-            checkIfRoleTypeExists(adminRole);
-            checkIfRoleTypeExists(employeeRole);
+            this.saveRoleTypeIfNotExists(adminRole);
+            this.saveRoleTypeIfNotExists(employeeRole);
+            this.saveRoleTypeIfNotExists(customerRole);
         } catch (Exception e) {
             System.out.println();
             System.out.println("Virhe luodessa rooleja");
             System.out.println(e.getMessage());
+            System.out.println();
         }
 
     }
@@ -45,7 +50,7 @@ public class UserRoleService {
         throw new IllegalArgumentException("Roletype not found");
     }
 
-    public void checkIfRoleTypeExists(UserRole userRole) {
+    public void saveRoleTypeIfNotExists(UserRole userRole) {
         if (this.userRoleRepository.findByRoleType(userRole.getRoleType()).isPresent()) {
             throw new IllegalArgumentException("Role exists");
         }
