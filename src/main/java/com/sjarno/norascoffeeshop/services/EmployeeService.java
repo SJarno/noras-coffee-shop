@@ -27,10 +27,9 @@ public class EmployeeService {
 
         return this.userAccountService.saveUserAccount(userAccount);
     }
-    /* public List<UserAccount> finAllEmployees() {
-        UserRole userRole = new UserRole();
-        userRole.setRoleType(RoleType.ROLE_EMPLOYEE);
-        return this.userAccountService.findUserByUserRole(userRole);
-    } */
+    public List<UserAccount> finAllEmployees() {
+        UserRole roleFound = this.userRoleService.findByRoleType(RoleType.ROLE_EMPLOYEE);
+        return this.userAccountService.findUsersByUserRole(roleFound);
+    }
 
 }

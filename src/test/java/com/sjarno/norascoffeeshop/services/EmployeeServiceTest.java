@@ -65,7 +65,7 @@ public class EmployeeServiceTest {
         Exception incorrectUsernameLengthException = assertThrows(Exception.class, () -> {
             this.employeeService.createNewEmployee(this.dummyEmpAccount);
         });
-        assertEquals("Username length violation", incorrectUsernameLengthException.getMessage());
+        assertEquals("Username must be between 4 and 40 characters", incorrectUsernameLengthException.getMessage());
 
         this.dummyEmpAccount.setUsername("Mikko");
         this.dummyEmpAccount.setPassword("pas");
@@ -102,9 +102,9 @@ public class EmployeeServiceTest {
         assertEquals("Password cannot be null", nullPasswordException.getMessage());
         
     }
-    /* @Test
+    @Test
     void findAllEmployees() {
         this.employeeService.createNewEmployee(this.employeeAccount);
-        assertEquals(2, this.employeeService.finAllEmployees());
-    } */
+        assertEquals(1, this.employeeService.finAllEmployees().size());
+    }
 }

@@ -50,7 +50,7 @@ public class UserRoleService {
         throw new IllegalArgumentException("Roletype not found");
     }
 
-    public void saveRoleTypeIfNotExists(UserRole userRole) {
+    private void saveRoleTypeIfNotExists(UserRole userRole) {
         if (this.userRoleRepository.findByRoleType(userRole.getRoleType()).isPresent()) {
             throw new IllegalArgumentException("Role exists");
         }

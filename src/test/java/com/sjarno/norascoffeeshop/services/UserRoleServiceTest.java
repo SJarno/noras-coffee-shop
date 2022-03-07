@@ -51,8 +51,4 @@ public class UserRoleServiceTest {
         assertEquals(RoleType.ROLE_CUSTOMER, roles.get(2).getRoleType());
     }
 
-    @Test
-    void testSaveRoleTypeIfNotExists() {
-
-    }
 }
