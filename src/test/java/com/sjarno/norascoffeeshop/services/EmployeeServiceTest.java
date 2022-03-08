@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 
+import com.sjarno.norascoffeeshop.models.RoleType;
 import com.sjarno.norascoffeeshop.models.UserAccount;
 import com.sjarno.norascoffeeshop.repositories.UserAccountRepository;
 
@@ -106,5 +107,25 @@ public class EmployeeServiceTest {
     void findAllEmployees() {
         this.employeeService.createNewEmployee(this.employeeAccount);
         assertEquals(1, this.employeeService.finAllEmployees().size());
+    }
+
+    @Test
+    void findEmployeeById() {
+        this.employeeService.createNewEmployee(this.employeeAccount);
+        UserAccount empAccount = this.employeeService.getEmployeeById(5L);
+        assertEquals(5, empAccount.getId());
+        assertEquals("Minna", empAccount.getUsername());
+        assertEquals(RoleType.ROLE_EMPLOYEE, empAccount.getRoles().get(0).getRoleType());
+    }
+
+    @Test
+    void findEmployeeByIdThrowsException() {
+        this.employeeService.createNewEmployee(this.employeeAccount);
+        Exception exception = assertThrows(Exception.class, () -> {
+            this.employeeService.getEmployeeById(9L);
+        });
+        assertEquals("User not found", exception.getMessage());
+        
+        
     }
 }

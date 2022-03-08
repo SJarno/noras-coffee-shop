@@ -19,11 +19,9 @@ public class EmployeeService {
     @Autowired
     private UserRoleService userRoleService;
 
-    //@Autowired
     public UserRole getEmployeeRole() {
         return this.userRoleService.findByRoleType(RoleType.ROLE_EMPLOYEE);
     }
-    
 
     /* Create new employee */
     public UserAccount createNewEmployee(UserAccount userAccount)
@@ -33,16 +31,22 @@ public class EmployeeService {
 
         return this.userAccountService.saveUserAccount(userAccount);
     }
+
     /* Get all emplyees */
     public List<UserAccount> finAllEmployees() {
         return this.userAccountService.findUsersByUserRole(getEmployeeRole());
     }
+
     /* Get employee by id */
     public UserAccount getEmployeeById(Long id) {
         return this.userAccountService.getUserByIdAndRole(getEmployeeRole(), id);
     }
 
     /* Get employee by username */
+    public UserAccount getEmployeeByUsername(String username) {
+        Long id = this.userAccountService.getUserByUsername(username).getId();
+        return this.userAccountService.getUserByIdAndRole(getEmployeeRole(), id);
+    }
 
     /* Update employee */
 

@@ -43,38 +43,52 @@ public class UserAccountServiceTest {
 
     UserAccount newUser;
 
+    List<UserRole> roles;
+
     @BeforeEach
     void setUp() {
         this.newUser = new UserAccount();
+        userAccountService.createUserAdmin();
+        this.roles = this.userRoleService.getAllUserRoleTypes();
     }
 
     @Test
     void testCreateUserAdmin() {
-        userAccountService.createUserAdmin();
         assertEquals(1, userAccountRepository.findAll().size());
     }
 
     @Test
     void findAllUsersByUserRole() {
-        userAccountService.createUserAdmin();
-        List<UserRole> roles = this.userRoleService.getAllUserRoleTypes();
+
         assertEquals(3, roles.size());
         List<UserAccount> adminUsers = this.userAccountService.findUsersByUserRole(roles.get(0));
         assertEquals(1, adminUsers.size());
         assertEquals("admin-nora", adminUsers.get(0).getUsername());
         assertEquals(RoleType.ROLE_ADMIN, adminUsers.get(0).getRoles().get(0).getRoleType());
     }
+
     @Test
     void testFindByUsername() {
         this.newUser.setUsername("Mikko");
         this.newUser.setPassword("password");
         this.newUser.setRoles(new ArrayList<>());
-
         this.userAccountService.saveUserAccount(this.newUser);
+
+        assertEquals(3, this.userRoleService.getAllUserRoleTypes().size());
+        assertEquals(2, this.userAccountRepository.findAll().size());
         UserAccount userByName = this.userAccountService.getUserByUsername("Mikko");
-        assertEquals(5, userByName.getId());
+        assertEquals(9, userByName.getId());
         assertEquals(this.newUser.getUsername(), userByName.getUsername());
     }
+
+    @Test
+    void testFindByUsernameThrowsExcpetion() {
+        Exception exception = assertThrows(Exception.class, () -> {
+            this.userAccountService.getUserByUsername("nameNotInDatabase");
+        });
+        assertEquals("User not found", exception.getMessage());
+    }
+
     @Test
     void testFindUserAccountById() {
         this.newUser.setUsername("MikkoId");
@@ -82,14 +96,37 @@ public class UserAccountServiceTest {
 
         this.userAccountService.saveUserAccount(this.newUser);
 
-        UserAccount userById = this.userAccountService.getUserById(5L);
+        UserAccount userById = this.userAccountService.getUserById(9L);
         assertEquals(this.newUser.getUsername(), userById.getUsername());
+    }
+
+    @Test
+    void findByIdThrowsException() {
+        Exception exception = assertThrows(Exception.class, () -> {
+            UserAccount userAccount = this.userAccountService.getUserById(6L);
+        });
+        assertEquals("User not found", exception.getMessage());
+    }
+
+    @Test
+    void findByIdAndRole() {
+        UserAccount adminUser = this.userAccountService.getUserByIdAndRole(this.roles.get(0), 8L);
+        assertEquals(8, adminUser.getId());
+        assertEquals("admin-nora", adminUser.getUsername());
+        assertEquals(RoleType.ROLE_ADMIN, adminUser.getRoles().get(0).getRoleType());
+    }
+
+    @Test
+    void findByIdAndRoleThrowsExcpetion() {
+        Exception exception = assertThrows(Exception.class, () -> {
+            this.userAccountService.getUserByIdAndRole(this.roles.get(0), 9L);
+        });
+        assertEquals("User not found", exception.getMessage());
     }
 
     @Test
     @WithMockUser(username = "admin-nora")
     void testGetUserAccountData() {
-        userAccountService.createUserAdmin();
         assertEquals("admin-nora", userAccountService.getUserAccountData().getUsername());
         UserAccount userAccount = userAccountRepository.findByUsername("admin-nora").get();
         UserAccount accountFromService = userAccountService.getUserAccountData();
@@ -99,7 +136,6 @@ public class UserAccountServiceTest {
     @Test
     @WithMockUser(username = "admin-nora")
     void testUpdateUsername() throws Exception {
-        userAccountService.createUserAdmin();
         assertEquals("admin-nora", userAccountService.getUserAccountData().getUsername());
         userAccountService.updateUsername("Mikko");
         assertEquals("Mikko", userAccountRepository.findByUsername("Mikko").get().getUsername());
@@ -109,7 +145,6 @@ public class UserAccountServiceTest {
     @Test
     @WithMockUser(username = "admin-nora")
     void takenUsernameThrowsError() {
-        userAccountService.createUserAdmin();
         Exception usernameTakenError = assertThrows(Exception.class, () -> {
             userAccountService.updateUsername("admin-nora");
         });
@@ -119,7 +154,6 @@ public class UserAccountServiceTest {
     @Test
     @WithAnonymousUser
     void anonymousUserCannotFindUsername() {
-        userAccountService.createUserAdmin();
         Exception usernameNotFound = assertThrows(UsernameNotFoundException.class, () -> {
             userAccountService.updateUsername("user");
         });
@@ -128,7 +162,6 @@ public class UserAccountServiceTest {
 
     @Test
     void testInitialDataExists() {
-        userAccountService.createUserAdmin();
         assertEquals(1, userAccountRepository.findAll().size());
         assertEquals("admin-nora", userAccountRepository.findByUsername("admin-nora").get().getUsername());
     }
@@ -136,7 +169,6 @@ public class UserAccountServiceTest {
     @Test
     @WithMockUser(username = "admin-nora")
     void testCanUpdatePassword() {
-        userAccountService.createUserAdmin();
         UserAccount userAccount = this.userAccountService.getUserAccountData();
         assertTrue(passwordEncoder.matches("pass", userAccount.getPassword()));
         UserAccount updatedAccount = userAccountService.updatePassword("newPass", "pass");
@@ -146,11 +178,15 @@ public class UserAccountServiceTest {
     @Test
     @WithMockUser(username = "admin-nora")
     void wrongCredentialsThrowsError() {
-        userAccountService.createUserAdmin();
         Exception wrongCredentials = assertThrows(IllegalArgumentException.class, () -> {
             userAccountService.updatePassword("new", "wrongPass");
         });
         assertEquals("Wrong credentials", wrongCredentials.getMessage());
+    }
+
+    private UserAccount createTestUser(String name, String password, ArrayList<UserRole> list) {
+        return this.userAccountService.saveUserAccount(
+                new UserAccount(name, password, list));
     }
 
 }
