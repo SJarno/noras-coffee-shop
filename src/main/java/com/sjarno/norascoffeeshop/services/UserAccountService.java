@@ -76,6 +76,29 @@ public class UserAccountService {
         this.userRoleService.findByRoleType(userRole.getRoleType());
         return this.userAccountRepository.findByRolesContaining(userRole);
     }
+    /* Get useraccount by id */
+    public UserAccount getUserById(Long id) {
+        Optional<UserAccount> user = this.userAccountRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new IllegalArgumentException("User not found");
+    }
+    public UserAccount getUserByUsername(String username) {
+        Optional<UserAccount> user = this.userAccountRepository.findByUsername(username);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new IllegalArgumentException("User not found");
+    }
+    /* Get user by id and role */
+    public UserAccount getUserByIdAndRole(UserRole userRole, Long id) {
+        Optional<UserAccount> user = this.userAccountRepository.findByIdAndRolesContaining(id, userRole);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new IllegalArgumentException("User not found");
+    }
 
     @Transactional
     public UserAccount updateUsername(String newUsername) throws Exception {

@@ -19,17 +19,33 @@ public class EmployeeService {
     @Autowired
     private UserRoleService userRoleService;
 
+    //@Autowired
+    public UserRole getEmployeeRole() {
+        return this.userRoleService.findByRoleType(RoleType.ROLE_EMPLOYEE);
+    }
+    
+
+    /* Create new employee */
     public UserAccount createNewEmployee(UserAccount userAccount)
             throws IllegalArgumentException {
-        UserRole userRole = this.userRoleService.findByRoleType(RoleType.ROLE_EMPLOYEE);
         userAccount.setRoles(
-                new ArrayList<>(Arrays.asList(userRole)));
+                new ArrayList<>(Arrays.asList(getEmployeeRole())));
 
         return this.userAccountService.saveUserAccount(userAccount);
     }
+    /* Get all emplyees */
     public List<UserAccount> finAllEmployees() {
-        UserRole roleFound = this.userRoleService.findByRoleType(RoleType.ROLE_EMPLOYEE);
-        return this.userAccountService.findUsersByUserRole(roleFound);
+        return this.userAccountService.findUsersByUserRole(getEmployeeRole());
     }
+    /* Get employee by id */
+    public UserAccount getEmployeeById(Long id) {
+        return this.userAccountService.getUserByIdAndRole(getEmployeeRole(), id);
+    }
+
+    /* Get employee by username */
+
+    /* Update employee */
+
+    /* Delete employee */
 
 }

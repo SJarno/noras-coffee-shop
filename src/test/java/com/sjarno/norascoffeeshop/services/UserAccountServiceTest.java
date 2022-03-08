@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.sjarno.norascoffeeshop.models.RoleType;
@@ -54,7 +55,7 @@ public class UserAccountServiceTest {
     }
 
     @Test
-    void findByUserRole() {
+    void findAllUsersByUserRole() {
         userAccountService.createUserAdmin();
         List<UserRole> roles = this.userRoleService.getAllUserRoleTypes();
         assertEquals(3, roles.size());
@@ -62,6 +63,27 @@ public class UserAccountServiceTest {
         assertEquals(1, adminUsers.size());
         assertEquals("admin-nora", adminUsers.get(0).getUsername());
         assertEquals(RoleType.ROLE_ADMIN, adminUsers.get(0).getRoles().get(0).getRoleType());
+    }
+    @Test
+    void testFindByUsername() {
+        this.newUser.setUsername("Mikko");
+        this.newUser.setPassword("password");
+        this.newUser.setRoles(new ArrayList<>());
+
+        this.userAccountService.saveUserAccount(this.newUser);
+        UserAccount userByName = this.userAccountService.getUserByUsername("Mikko");
+        assertEquals(5, userByName.getId());
+        assertEquals(this.newUser.getUsername(), userByName.getUsername());
+    }
+    @Test
+    void testFindUserAccountById() {
+        this.newUser.setUsername("MikkoId");
+        this.newUser.setPassword("password");
+
+        this.userAccountService.saveUserAccount(this.newUser);
+
+        UserAccount userById = this.userAccountService.getUserById(5L);
+        assertEquals(this.newUser.getUsername(), userById.getUsername());
     }
 
     @Test
