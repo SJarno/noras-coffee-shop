@@ -34,7 +34,10 @@ public class EmployeeServiceTest {
 
     @BeforeEach
     void setUp() {
-        this.employeeAccount = new UserAccount("Minna", "passu", new ArrayList<>());
+        this.employeeAccount = new UserAccount();
+        this.employeeAccount.setUsername("Minna");
+        this.employeeAccount.setPassword("passu");
+        this.employeeAccount.setRoles(new ArrayList<>());
         this.dummyEmpAccount = new UserAccount();
     }
 
@@ -50,10 +53,11 @@ public class EmployeeServiceTest {
     }
     @Test
     void addingSameUsernameThrowsException() {
-        dummyEmpAccount.setUsername("Minna");
-        dummyEmpAccount.setPassword("password");
+        this.employeeService.createNewEmployee(employeeAccount);
+        this.dummyEmpAccount.setUsername("Minna");
+        this.dummyEmpAccount.setPassword("password");
+        this.dummyEmpAccount.setRoles(new ArrayList<>());
         Exception usernameException = assertThrows(Exception.class, () -> {
-            this.employeeService.createNewEmployee(employeeAccount);
             this.employeeService.createNewEmployee(dummyEmpAccount);
         });
         assertEquals("Username taken.", usernameException.getMessage());
@@ -63,6 +67,7 @@ public class EmployeeServiceTest {
     void incorrectInputValuesThrowsException() {
         this.dummyEmpAccount.setUsername("use");
         this.dummyEmpAccount.setPassword("password");
+        this.dummyEmpAccount.setRoles(new ArrayList<>());
         Exception incorrectUsernameLengthException = assertThrows(Exception.class, () -> {
             this.employeeService.createNewEmployee(this.dummyEmpAccount);
         });
@@ -90,6 +95,7 @@ public class EmployeeServiceTest {
         assertEquals("Password cannot be empty", passwordEmptyException.getMessage());
 
         UserAccount nullValueUser = new UserAccount();
+        nullValueUser.setRoles(new ArrayList<>());
 
         Exception nullValueExcpetion = assertThrows(Exception.class, () -> {
             this.employeeService.createNewEmployee(nullValueUser);
@@ -126,6 +132,22 @@ public class EmployeeServiceTest {
         });
         assertEquals("User not found", exception.getMessage());
         
-        
+    }
+    @Test
+    void findEmployeeByUsername() {
+        this.employeeService.createNewEmployee(this.employeeAccount);
+        UserAccount empAccount = this.employeeService.getEmployeeByUsername("Minna");
+        assertEquals(5, empAccount.getId());
+        assertEquals("Minna", empAccount.getUsername());
+        assertEquals(RoleType.ROLE_EMPLOYEE, empAccount.getRoles().get(0).getRoleType());
+    }
+
+    @Test
+    void findByUsernameThrowsExcpeption() {
+        this.employeeService.createNewEmployee(this.employeeAccount);
+        Exception exception = assertThrows(Exception.class, () -> {
+            this.employeeService.getEmployeeByUsername("Minn");
+        });
+        assertEquals("User not found", exception.getMessage());
     }
 }

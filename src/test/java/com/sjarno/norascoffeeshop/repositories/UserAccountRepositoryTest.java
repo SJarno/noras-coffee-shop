@@ -124,7 +124,15 @@ public class UserAccountRepositoryTest {
         assertEquals(RoleType.ROLE_CUSTOMER, customerAndEmployeeByCustomerRole.getRoles().get(1).getRoleType());
         assertEquals(customerAndEmployeeByEmpRole, customerAndEmployeeByCustomerRole);
         
-        
+    }
+    @Test
+    void findByUsernameAndRole() {
+        UserRole adminRole = this.userRoleRepository.findAll().get(0);
+        UserAccount adminAccount = this.userAccountRepository
+            .findByUsernameAndRolesContaining("user", adminRole).get();
+        assertEquals("user", adminAccount.getUsername());
+        assertEquals(this.userAdmin, adminAccount);
+
     }
 
     @Test

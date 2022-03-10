@@ -125,6 +125,22 @@ public class UserAccountServiceTest {
     }
 
     @Test
+    void findByUsernameAndRole() {
+        UserAccount adminUser = this.userAccountService
+            .getUserByUsernameAndRole("admin-nora", this.roles.get(0));
+        assertEquals(8, adminUser.getId());
+        assertEquals("admin-nora", adminUser.getUsername());
+        assertEquals(RoleType.ROLE_ADMIN, adminUser.getRoles().get(0).getRoleType());
+    }
+    @Test
+    void findByUsernameAndRoleThrowsException() {
+        Exception exception = assertThrows(Exception.class, () -> {
+            this.userAccountService.getUserByUsernameAndRole("admin-nor", this.roles.get(0));
+        });
+        assertEquals("User not found", exception.getMessage());
+    }
+
+    @Test
     @WithMockUser(username = "admin-nora")
     void testGetUserAccountData() {
         assertEquals("admin-nora", userAccountService.getUserAccountData().getUsername());

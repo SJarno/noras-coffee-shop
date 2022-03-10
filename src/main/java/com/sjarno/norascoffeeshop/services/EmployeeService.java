@@ -9,6 +9,7 @@ import com.sjarno.norascoffeeshop.models.UserAccount;
 import com.sjarno.norascoffeeshop.models.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmployeeService {
@@ -26,8 +27,7 @@ public class EmployeeService {
     /* Create new employee */
     public UserAccount createNewEmployee(UserAccount userAccount)
             throws IllegalArgumentException {
-        userAccount.setRoles(
-                new ArrayList<>(Arrays.asList(getEmployeeRole())));
+        userAccount.getRoles().add(getEmployeeRole());
 
         return this.userAccountService.saveUserAccount(userAccount);
     }
@@ -44,8 +44,7 @@ public class EmployeeService {
 
     /* Get employee by username */
     public UserAccount getEmployeeByUsername(String username) {
-        Long id = this.userAccountService.getUserByUsername(username).getId();
-        return this.userAccountService.getUserByIdAndRole(getEmployeeRole(), id);
+        return this.userAccountService.getUserByUsernameAndRole(username, getEmployeeRole());
     }
 
     /* Update employee */

@@ -12,5 +12,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long>{
     Optional<UserAccount> findByUsername(String username);
     List<UserAccount> findByRolesContaining(UserRole userRole);
     Optional<UserAccount> findByIdAndRolesContaining(Long id, UserRole userRole);
+    Optional<UserAccount> findByUsernameAndRolesContaining(String username, UserRole userRole);
     
 }

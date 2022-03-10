@@ -58,6 +58,7 @@ public class UserAccountService {
         this.validateUsername(userAccount.getUsername());
         this.validatePassword(userAccount.getPassword());
         userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+        //userAccount.setRoles(new ArrayList<>());
         return this.userAccountRepository.save(userAccount);
     }
 
@@ -94,6 +95,15 @@ public class UserAccountService {
     /* Get user by id and role */
     public UserAccount getUserByIdAndRole(UserRole userRole, Long id) {
         Optional<UserAccount> user = this.userAccountRepository.findByIdAndRolesContaining(id, userRole);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new IllegalArgumentException("User not found");
+    }
+    /* get account by username and role */
+    public UserAccount getUserByUsernameAndRole(String username, UserRole userRole) {
+        Optional<UserAccount> user = this.userAccountRepository
+            .findByUsernameAndRolesContaining(username, userRole);
         if (user.isPresent()) {
             return user.get();
         }
