@@ -58,6 +58,7 @@ public class UserAccountService {
         this.validateUsername(userAccount.getUsername());
         this.validatePassword(userAccount.getPassword());
         userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+        //userAccount.setRoles(new ArrayList<>());
         return this.userAccountRepository.save(userAccount);
     }
 
@@ -76,6 +77,38 @@ public class UserAccountService {
         this.userRoleService.findByRoleType(userRole.getRoleType());
         return this.userAccountRepository.findByRolesContaining(userRole);
     }
+    /* Get useraccount by id */
+    public UserAccount getUserById(Long id) {
+        Optional<UserAccount> user = this.userAccountRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new IllegalArgumentException("User not found");
+    }
+    public UserAccount getUserByUsername(String username) {
+        Optional<UserAccount> user = this.userAccountRepository.findByUsername(username);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new IllegalArgumentException("User not found");
+    }
+    /* Get user by id and role */
+    public UserAccount getUserByIdAndRole(UserRole userRole, Long id) {
+        Optional<UserAccount> user = this.userAccountRepository.findByIdAndRolesContaining(id, userRole);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new IllegalArgumentException("User not found");
+    }
+    /* get account by username and role */
+    public UserAccount getUserByUsernameAndRole(String username, UserRole userRole) {
+        Optional<UserAccount> user = this.userAccountRepository
+            .findByUsernameAndRolesContaining(username, userRole);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new IllegalArgumentException("User not found");
+    }
 
     @Transactional
     public UserAccount updateUsername(String newUsername) throws Exception {
@@ -88,6 +121,7 @@ public class UserAccountService {
     @Transactional
     public UserAccount updatePassword(String newPassword, String oldPassword) {
         UserAccount existingUser = getUserAccountData();
+        validatePassword(newPassword);
         if (passwordEncoder.matches(oldPassword, existingUser.getPassword())) {
             existingUser.setPassword(passwordEncoder.encode(newPassword.trim()));
             return existingUser;

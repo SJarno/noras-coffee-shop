@@ -20,11 +20,9 @@ public class EmployeeController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createNewEmployee(@RequestBody UserAccount newEmployee) {
-        System.out.println();
-        System.out.println(newEmployee);
-        System.out.println();
         try {
-            return new ResponseEntity<UserAccount>(this.employeeService.createNewEmployee(newEmployee),
+            return new ResponseEntity<UserAccount>(
+                    this.employeeService.createNewEmployee(newEmployee),
                     HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);

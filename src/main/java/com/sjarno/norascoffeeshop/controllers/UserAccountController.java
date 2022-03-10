@@ -24,17 +24,13 @@ public class UserAccountController {
 
     /* Update username */
     @PutMapping("/update-username")
-    public ResponseEntity<?> updateUsername(
-            @RequestBody String newUsername,
-            HttpServletRequest request) {
-
+    public ResponseEntity<?> updateUsername(@RequestBody String newUsername) {
         Map<String, String> result = new HashMap<>();
         try {
-            UserAccount user = userAccountService.updateUsername(newUsername.trim());
+            UserAccount user = userAccountService.updateUsername(newUsername);
             result.put("username", user.getUsername());
             return new ResponseEntity<Map<String, String>>(result, HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
