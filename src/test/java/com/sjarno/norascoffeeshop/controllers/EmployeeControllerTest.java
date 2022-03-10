@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.Map;
 
-
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -43,7 +42,6 @@ public class EmployeeControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-
     private UserAccount employyAccount;
 
     @BeforeEach
@@ -51,25 +49,24 @@ public class EmployeeControllerTest {
         this.employyAccount = new UserAccount();
         this.employyAccount.setUsername("Mikko");
         this.employyAccount.setPassword("pass");
-        this.employyAccount.setRoles(new ArrayList<>());
+         
     }
 
     @Test
     @WithMockUser(username = "admin-nora", password = "pass")
     void testCreateNewEmployee() throws Exception {
         MvcResult result = this.mockMvc.perform(post("/employee/create")
-            .with(SecurityMockMvcRequestPostProcessors.csrf())
-            .content(objectMapper.writeValueAsString(this.employyAccount))
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isCreated())
-            .andReturn();
-            
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .content(objectMapper.writeValueAsString(this.employyAccount))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+
         String jsonResult = result.getResponse().getContentAsString();
         UserAccount createdEmpAccount = objectMapper.readValue(jsonResult, UserAccount.class);
         assertEquals(5, createdEmpAccount.getId());
         assertEquals("Mikko", createdEmpAccount.getUsername());
         assertEquals(RoleType.ROLE_EMPLOYEE, createdEmpAccount.getRoles().get(0).getRoleType());
 
-        
     }
 }

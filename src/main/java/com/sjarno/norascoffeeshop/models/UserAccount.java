@@ -1,5 +1,6 @@
 package com.sjarno.norascoffeeshop.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -35,10 +36,8 @@ public class UserAccount extends AbstractPersistable<Long> {
     private String password;
 
     // enum typed roles as string
-    
     @ManyToMany(fetch = FetchType.EAGER)
-    //@ElementCollection(fetch = FetchType.EAGER)
-    private List<UserRole> roles;
+    private List<UserRole> roles = new ArrayList<>();
 
 
 }

@@ -43,10 +43,9 @@ public class UserAccountService {
 
         userRoleService.addBasicRoleTypes();
 
-        UserAccount newUser = new UserAccount(
-                "admin-nora",
-                "pass",
-                new ArrayList<>());
+        UserAccount newUser = new UserAccount();
+        newUser.setUsername("admin-nora");
+        newUser.setPassword("pass");
 
         Optional<UserRole> role = this.userRoleRepository.findByRoleType(RoleType.ROLE_ADMIN);
 
@@ -58,7 +57,6 @@ public class UserAccountService {
         this.validateUsername(userAccount.getUsername());
         this.validatePassword(userAccount.getPassword());
         userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
-        //userAccount.setRoles(new ArrayList<>());
         return this.userAccountRepository.save(userAccount);
     }
 

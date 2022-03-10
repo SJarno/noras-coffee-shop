@@ -27,6 +27,7 @@ public class EmployeeService {
     /* Create new employee */
     public UserAccount createNewEmployee(UserAccount userAccount)
             throws IllegalArgumentException {
+        //add arraylist
         userAccount.getRoles().add(getEmployeeRole());
 
         return this.userAccountService.saveUserAccount(userAccount);
