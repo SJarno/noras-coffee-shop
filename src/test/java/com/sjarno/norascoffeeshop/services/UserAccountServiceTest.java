@@ -195,9 +195,18 @@ public class UserAccountServiceTest {
     @WithMockUser(username = "admin-nora")
     void wrongCredentialsThrowsError() {
         Exception wrongCredentials = assertThrows(IllegalArgumentException.class, () -> {
-            userAccountService.updatePassword("new", "wrongPass");
+            userAccountService.updatePassword("newPass", "wrongPass");
         });
         assertEquals("Wrong credentials", wrongCredentials.getMessage());
+    }
+
+    @Test
+    @WithMockUser(username = "admin-nora", password = "pass")
+    void testUpdatePasswordThrowsExceptionWithIncorrectInput() {
+        Exception incorrectValueError = assertThrows(IllegalArgumentException.class, () -> {
+            userAccountService.updatePassword("new", "pass");
+        });
+        assertEquals("Password length violation", incorrectValueError.getMessage());
     }
 
     private UserAccount createTestUser(String name, String password, ArrayList<UserRole> list) {

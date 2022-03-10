@@ -121,6 +121,7 @@ public class UserAccountService {
     @Transactional
     public UserAccount updatePassword(String newPassword, String oldPassword) {
         UserAccount existingUser = getUserAccountData();
+        validatePassword(newPassword);
         if (passwordEncoder.matches(oldPassword, existingUser.getPassword())) {
             existingUser.setPassword(passwordEncoder.encode(newPassword.trim()));
             return existingUser;
