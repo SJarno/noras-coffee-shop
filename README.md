@@ -8,4 +8,4 @@ Upcoming...
 
 ## Deployment
 
-The app is being deployed here: https://noras-coffee-shop.herokuapp.com/
+Note: not in prod anymore in Heroku as free dynos will not be available in near future.
